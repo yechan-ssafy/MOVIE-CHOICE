@@ -35,7 +35,7 @@ def movie_api_url(request):
                 movie.vote_count = res['results'][j]['vote_count']
                 movie.vote_average = res['results'][j]['vote_average']
                 movie.overview = res['results'][j]['overview']
-                movie.poster_path = res['results'][j]['poster_path']
+                movie.poster_path = 'https://image.tmdb.org/t/p/w500/' + res['results'][j]['poster_path']
             movie.save()
 
     return redirect('movies:index')
