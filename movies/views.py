@@ -16,10 +16,14 @@ def index(request):
 
 
 def movie_api_url(request):
-    api_url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=334075ba2b018bdb3e91bc504676f9b9&language=ko-kr&page='
+    genre_api_url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=334075ba2b018bdb3e91bc504676f9b9&language=ko-kr'
+    genre_res = requests.get(genre_api_url).json()
+    # pprint(genre_res)
+    
+    movie_api_url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=334075ba2b018bdb3e91bc504676f9b9&language=ko-kr&page='
     for i in range(1, 51):
-        new_url = api_url + str(i)
-        res = requests.get(new_url).json()
+        new_movie_api_url = movie_api_url + str(i)
+        res = requests.get(new_movie_api_url).json()
         # pprint(res)
 
         for j in range(len(res['results'])):

@@ -6,6 +6,10 @@
   <title>Document</title>
 </head>
 <body>
-  <h1>성공?</h1>
+  <h1>Movie List</h1>
+  {% for  movie in movie_list %}
+    <span>{{ movie.title }}</span>
+    <br>
+  {% endfor %}
 </body>
 </html>
