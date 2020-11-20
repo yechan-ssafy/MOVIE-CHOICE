@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>회원가입</h1>
-<form action="" method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit">
-</form>
-{% endblock  %}
+  <div style="width:100%; height:100%; background-image:URL(https://an2-img.amz.wtchn.net/image/v1/watcha/image/upload/v1600848003/z5bqlnc8yqsakgm4wjmo.webp;">
+    <p>회원가입</p>
+    <form action="" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit">
+    </form>
+  </div>
+{% endblock %}
