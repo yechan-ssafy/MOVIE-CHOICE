@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .models import Movie
+from .models import Movie, Genre
 
 import requests
 from pprint import pprint
@@ -18,10 +18,18 @@ def index(request):
 def movie_api_url(request):
     genre_api_url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=334075ba2b018bdb3e91bc504676f9b9&language=ko-kr'
     genre_res = requests.get(genre_api_url).json()
-    # pprint(genre_res)
+    print(genre_res)
+
+    for i in range(len(genre_res['genres'])):
+        genre = Genre()
+        genre.id = genre_res['genres'][i]['id']
+        genre.name = genre_res['genres'][i]['name']
+        genre.save()
+
     
     movie_api_url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=334075ba2b018bdb3e91bc504676f9b9&language=ko-kr&page='
-    for i in range(1, 51):
+
+    for i in range(1, 11):
         new_movie_api_url = movie_api_url + str(i)
         res = requests.get(new_movie_api_url).json()
         # pprint(res)
@@ -37,5 +45,12 @@ def movie_api_url(request):
                 movie.overview = res['results'][j]['overview']
                 movie.poster_path = 'https://image.tmdb.org/t/p/w500/' + res['results'][j]['poster_path']
             movie.save()
+
+            # for k in range(len(res['results'][j]['genre_ids'])):
+            #     genre = get_object_or_404(Genre, id=res['results'][j]['genre_ids'][k])
+            #     movie_genres.movie_id = movie['id']
+            #     movie_genres.genre_id = genre['id']
+            #     movie_genres.save()
+
 
     return redirect('movies:index')

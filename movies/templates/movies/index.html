@@ -9,8 +9,10 @@
   <h1>Movie List</h1>
   {% for  movie in movie_list %}
     <span>{{ movie.title }}</span>
+    <br>
     <img src="{{ movie.poster_path }}" alt="">
     <br>
+    <span>{{ movie.overview }}</span>
   {% endfor %}
 </body>
 </html>
