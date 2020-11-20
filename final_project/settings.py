@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'community',
     'accounts',
     'rest_framework',
+    'django_seed',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'final_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'final_project' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
