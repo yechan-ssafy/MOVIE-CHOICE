@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/dacf7dcd9c.js" crossorigin="anonymous"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div class="d-flex flex-column">
+    <div class='sticky-top ml-4 d-flex flex-row align-items-center justify-content-between' style="background-color:white; border-bottom: 1px solid rgba(var(--b6a,219,219,219),1);">
+      <div class='d-flex flex-row align-items-center'>
+        <img class='mt-1' src="https://upload-icon.s3.us-east-2.amazonaws.com/uploads/icons/png/3400650091557749680-512.png" style="width:30px;" alt="">
+        <h4 class='mt-2'>MOVIE CHOICE</h4>
+        <div class='ml-2 mt-1 d-flex justify-content-between' >
+        <a class='btn' href="{% url 'movies:index' %}">영화 목록</a> 
+        {% comment %} <a class='btn' href="{% url 'movies:recommended' %}">영화 추천</a> {% endcomment %}
+        {% if request.user.is_authenticated %}
+          <a class='btn' href="{% url 'accounts:profile' user.username %}">Profile</a>
+          <a class='btn' href="{% url 'community:index' %}">커뮤니티</a>
+          <a class='btn' href="{% url 'community:create' %}">리뷰 작성</a>
+          <form action="{% url 'accounts:logout' %}" method="POST">
+            {% csrf_token %}
+            <button class='btn'type="submit">Logout</button>
+          </form>
+        {% else %}
+          <a class='btn' href="{% url 'accounts:signup' %}">Signup</a>
+          <a class='btn' href="{% url 'accounts:login' %}">Login</a>
+        {% endif %}
+        <hr/>
+        </div>
+      </div>
+      <div class='mr-4'>
+        <p class='d-flex justify-content-center mt-3'>Hello, {{ user.username }}</p>
+      </div>
+    </div>
+    <div class='container'>
+    
+    {% block content %}
+    {% endblock %}
+    </div>
+  </div>
+  {% block script %}
+  {% endblock %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+</html>
