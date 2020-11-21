@@ -1,10 +1,64 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>로그인</h1>
-  <form action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit">
-  </form>
+<div class="main-container">
+  <div class="wrap">
+    <div class="main-wrap">
+      <h1 class="display-4 font01">로그인</h1>
+      <form action="" method="POST">
+        {% csrf_token %}
+        <div class="font02">
+          {{ form.as_p }}
+        </div>
+        <div class="d-flex column justify-content-center">
+          <input class="btn-lg btn-primary" type="submit">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock  %}
+
+{% block script %}
+  <script>
+    document.getElementById('id_username').placeholder = '아이디';
+    document.getElementById('id_password').placeholder = '비밀번호';
+  </script>
+{% endblock %}
+
+{% block style %}
+  .main-container {
+    width: 100%;
+    height: 100%;
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+  }
+  .wrap {
+    width: 100%;
+    display:flex;
+    flex-direction: row;
+    justify-content:center;
+  }
+  .main-wrap {
+    width:500px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin-top: 21px;
+  }
+  p label {
+  position:absolute !important;  
+  width:1px; 
+  height:1px; 
+  overflow:hidden;
+  clip:rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip:rect(1px, 1px, 1px, 1px);
+  }
+  p input {
+    width: 465px;
+    height: 48px;
+    border: solid 1px var(	--border-gray-color );
+    background: white;
+  }
+{% endblock %}
