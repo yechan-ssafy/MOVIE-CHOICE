@@ -4,8 +4,13 @@ from .models import Movie, Genre
 
 import requests
 from pprint import pprint
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET, require_POST, require_http_methods
+
+
 
 # Create your views here.
+@require_GET
 def index(request):
     movie_list = Movie.objects.all()
     context = {
@@ -56,9 +61,30 @@ def movie_api_url(request):
     return redirect('movies:index')
 
 
+@require_GET
 def detail(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     context = {
         'movie': movie,
     }
     return render(request, 'movies/detail.html', context)
+
+
+@require_POST
+def like(request, movie_id):
+    if request.user.is_authenticated:
+        movie = get_object_or_404(Movie, id=movie_id)
+        user = request.user
+
+        if movie.like_users.filter(pk=user.pk).exists():
+            movie.like_users.remove(user)
+            is_like = False
+        else:
+            movie.like_users.add(user)
+            is_like = True
+        data = {
+            'is_like' : is_like,
+            'like_count': movie.like_users.count()
+        }
+        return JsonResponse(data)
+    return redirect('accounts:login')
