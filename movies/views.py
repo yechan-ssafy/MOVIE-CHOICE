@@ -54,3 +54,11 @@ def movie_api_url(request):
 
 
     return redirect('movies:index')
+
+
+def detail(request, movie_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+    context = {
+        'movie': movie,
+    }
+    return render(request, 'movies/detail.html', context)
