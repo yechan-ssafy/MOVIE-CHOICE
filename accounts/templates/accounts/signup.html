@@ -2,11 +2,93 @@
 
 {% block content %}
   <div style="width:100%; height:100%; background-image:URL(https://an2-img.amz.wtchn.net/image/v1/watcha/image/upload/v1600848003/z5bqlnc8yqsakgm4wjmo.webp;">
-    <p>회원가입</p>
-    <form action="" method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <input type="submit">
-    </form>
+    <div class="main-container">
+      <div class="wrap">
+        <div class="main-wrap">
+          <h1 class="display-4 font01 mb-5">회원가입</h1>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <div class="font02">
+              {{ form.as_p }}
+            </div>
+            <div class="d-flex column justify-content-center">
+              <input class="btn-lg btn-primary" type="submit">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
+{% endblock %}
+
+{% block script %}
+  <script>
+    document.getElementById('id_username').placeholder = '아이디';
+    document.getElementById('id_password1').placeholder = '비밀번호';
+    document.getElementById('id_password2').placeholder = '비밀번호 확인';
+  </script>
+{% endblock %}
+
+{% block style %}
+  .main-container {
+    width: 100%;
+    height: 100%;
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:center;
+  }
+  .wrap {
+    padding-right: 30px;
+    width: 80%;
+    height: 50%;
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:center;
+    background-size: 300px;
+  }
+  .main-wrap {
+    margin-left: 30px;
+    width:500px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    margin-top: 21px;
+    
+  }
+  span {
+    white-space: pre-line;
+  }
+  p label {
+  position:absolute !important;  
+  width:1px; 
+  height:1px; 
+  overflow:hidden;
+  clip:rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip:rect(1px, 1px, 1px, 1px);
+  }
+  .helptext {
+    position:absolute !important;  
+    width:1px; 
+    height:1px; 
+    overflow:hidden;
+    clip:rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip:rect(1px, 1px, 1px, 1px);
+  }
+  ul {
+    position:absolute !important;  
+    width:1px; 
+    height:1px; 
+    overflow:hidden;
+    clip:rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip:rect(1px, 1px, 1px, 1px);
+  }
+  p input {
+    width: 465px;
+    height: 48px;
+    border: solid 1px var(	--border-gray-color );
+    background: lightyellow;
+  }
 {% endblock %}

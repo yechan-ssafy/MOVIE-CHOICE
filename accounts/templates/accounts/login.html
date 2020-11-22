@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
-<div class="main-container">
-  <div class="wrap">
-    <div class="main-wrap">
-      <h1 class="display-4 font01 mb-5">로그인</h1>
-      <form action="" method="POST">
-        {% csrf_token %}
-        <div class="font02">
-          {{ form.as_p }}
-        </div>
-        <div class="d-flex column justify-content-center">
-          <input class="btn-lg btn-primary mt-5" type="submit">
-        </div>
-      </form>
+<div style="width:100%; height:100%; background-image:URL(https://an2-img.amz.wtchn.net/image/v1/watcha/image/upload/v1600848003/z5bqlnc8yqsakgm4wjmo.webp;">
+  <div class="main-container">
+    <div class="wrap">
+      <div class="main-wrap">
+        <h1 class="display-4 font01 mb-5">로그인</h1>
+        <form action="" method="POST">
+          {% csrf_token %}
+          <div class="font02">
+            {{ form.as_p }}
+          </div>
+          <div class="d-flex column justify-content-center">
+            <input class="btn-lg btn-primary mt-5" type="submit">
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
@@ -37,17 +38,17 @@
     justify-content:center;
   }
   .wrap {
+    padding-right: 30px;
     width: 80%;
     height: 50%;
     display:flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items:center;
-    background: white url("{% static 'icons/slate.jpg' %}") no-repeat right;
     background-size: 300px;
   }
   .main-wrap {
-    margin-left: 50px;
+    margin-left: 30px;
     width:500px;
     display:flex;
     flex-direction: column;
