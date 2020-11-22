@@ -1,37 +1,64 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>영화 목록</h1>
+  <h1>Movies</h1>
   <hr>
-  {% for movie in movie_list %}
-    <h3>{{ movie.title }}</h3>
-    <br>
-    <img src="{{ movie.poster_path }}" alt="{{ movie.title }}">
-    <br>
-    <form id="form_like" data-movieId="{{ movie.id }}" action="{% url 'movies:like' movie.id %}" method="POST" class="d-inline">
-      {% csrf_token %}
-      {% if user in movie.like_users.all %}
-        <button class="btn btn-link">
-          <i class="fas fa-heart fa-lg heart-{{ movie.id }}" style="color:crimson;"></i>
-        </button>
-      {% else %}
-        <button class="btn btn-link">
-          <i class="fas fa-heart fa-lg heart-{{ movie.id }}" style="color:black;"></i>
-        </button>
-      {% endif %}
-    </form>
+  <h2>장르별 추천</h2>
+  <br>
+  <button id="left"> < </button><button id="right"> > </button>
+  <div class="wrap">
+    {% for genre in genres %}
+      <div class="inner jumbotron jumbotron-fluid float-left" display="inline-block" style="background-color:white; border: 1px solid rgba(var(--b6a,219,219,219),1);">
+        <div>
+          {% if genre.movie_set %}
+            <h1><a href="{% url 'movies:genre_movie_list' genre.name %}"><h3 class='btn-lg btn'>#{{ genre.name }}</h3></a></h1>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <br>
+  {% comment %} <div>
+    {% for movie in movie_list %}
+      <h3>{{ movie.title }}</h3>
+      <br>
+      <img src="{{ movie.poster_path }}" alt="{{ movie.title }}">
+      <br>
+      <form id="form_like" data-movieId="{{ movie.id }}" action="{% url 'movies:like' movie.id %}" method="POST" class="d-inline">
+        {% csrf_token %}
+        {% if user in movie.like_users.all %}
+          <button class="btn btn-link">
+            <i class="fas fa-heart fa-lg heart-{{ movie.id }}" style="color:crimson;"></i>
+          </button>
+        {% else %}
+          <button class="btn btn-link">
+            <i class="fas fa-heart fa-lg heart-{{ movie.id }}" style="color:black;"></i>
+          </button>
+        {% endif %}
+      </form>
 
-    <span id='likeCount-{{ movie.id }}'>{{ movie.like_users.all|length }}명이 이 영화를 좋아합니다.</span>
-    <br>
-    <a href="{% url 'movies:detail' movie.id %}">[detail]</a>
-    <hr>
-  {% endfor %}
+      <span id='likeCount-{{ movie.id }}'>{{ movie.like_users.all|length }}명이 이 영화를 좋아합니다.</span>
+      <br>
+      <a href="{% url 'movies:detail' movie.id %}">[detail]</a>
+      <hr>
+    {% endfor %}
+  </div> {% endcomment %}
 
 {% endblock %}
 
 {% block script %}
   <script>
-    const likeBtnForms = document.querySelectorAll('#form_like')
+    var outer = $('.wrap');
+
+    $('#right').click(function() {
+          outer.animate({scrollLeft: '+=30%'}, 500);
+    });
+
+    $('#left').click(function() {
+          outer.animate({scrollLeft: '-=30%'}, 500);
+    });
+
+    {% comment %} const likeBtnForms = document.querySelectorAll('#form_like')
     likeBtnForms.forEach(likeBtnForm => {
       const movieId = likeBtnForm.dataset.movieid
       likeBtnForm.addEventListener('click', function (e) {
@@ -54,8 +81,20 @@
           })
 
       })
-    })
+    }) {% endcomment %}
 
   </script>
 
 {% endblock %}
+
+{% block style %}
+  .wrap {
+     width: 100%;
+     height: 100%;
+     overflow: scroll;
+  }
+
+  .inner {
+     width: 33%;
+  }
+{% endblock  %}

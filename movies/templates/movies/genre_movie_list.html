@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="text-center">{{ genre.name }}</h1>
+  <hr>
+  {% for movie in movie_list %}
+    <a href="{% url 'movies:detail' movie.pk %}"><p>{{ movie.title }}</p></a>
+  {% endfor %}
+  
+{% endblock %}
