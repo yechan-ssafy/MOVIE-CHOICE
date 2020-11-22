@@ -18,7 +18,8 @@ class Movie(models.Model):
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
 
 
-class Score(models.Model):
-    score = models.IntegerField()
+class MovieComment(models.Model):
+    content = models.CharField(max_length=200)
+    rank = models.IntegerField()
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
