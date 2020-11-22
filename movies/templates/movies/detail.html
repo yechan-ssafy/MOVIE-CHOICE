@@ -8,5 +8,32 @@
   <br>
   <span>{{ movie.overview }}</span>
   <br>
+  <span>{{ movie.vote_average }}</span>
+  <br>
   <a href="{% url 'community:create' movie.id %}">리뷰 쓰러 가기</a>
-{% endblock %}
+  <br>
+  <h4>댓글 목록</h4>
+  {% if comments|length %}
+    <p><b>{{ comments|length }}개의 평점이 있습니다.</b></p>
+  {% endif %}
+  {% for comment in comments %}
+    <div>
+      {{ comment.user }}
+      <br>
+      {{ comment.rank }} - {{ comment.content }}
+    </div>
+  {% empty %}
+    <p><b>평점이 없습니다</b></p>
+  {% endfor %}
+  <hr>
+  {% if request.user.is_authenticated %}
+    <form action="{% url 'movies:create_comment' movie.id %}" method="POST">
+      {% csrf_token %}
+      {{ comment_form }}
+      <input type="submit" value="평점쓰기">
+    </form>
+  {% else %}
+    <a href="{% url 'accounts:login' %}">[평점을 작성하려면 로그인하세요.]</a>
+  {% endif %}
+  <a href="{% url 'movies:index' %}">[back]</a>
+{% endblock  %}
