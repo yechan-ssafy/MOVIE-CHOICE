@@ -10,6 +10,8 @@
   <br>
   <span>{{ movie.vote_average }}</span>
   <br>
+  <span>{{ movie.genre.name }}</span>
+  <br>
   <a href="{% url 'community:create' movie.id %}">리뷰 쓰러 가기</a>
   <br>
   <h4>댓글 목록</h4>
@@ -35,5 +37,6 @@
   {% else %}
     <a href="{% url 'accounts:login' %}">[평점을 작성하려면 로그인하세요.]</a>
   {% endif %}
+  <br>
   <a href="{% url 'movies:index' %}">[back]</a>
 {% endblock  %}
