@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Movie, Genre
+from .forms import MovieCommentForm
 
 import requests
 from pprint import pprint
@@ -23,7 +24,7 @@ def index(request):
 def movie_api_url(request):
     genre_api_url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=334075ba2b018bdb3e91bc504676f9b9&language=ko-kr'
     genre_res = requests.get(genre_api_url).json()
-    print(genre_res)
+    # print(genre_res)
 
     for i in range(len(genre_res['genres'])):
         genre = Genre()
@@ -49,13 +50,14 @@ def movie_api_url(request):
                 movie.vote_average = res['results'][j]['vote_average']
                 movie.overview = res['results'][j]['overview']
                 movie.poster_path = 'https://image.tmdb.org/t/p/w500/' + res['results'][j]['poster_path']
-            movie.save()
-
-            # for k in range(len(res['results'][j]['genre_ids'])):
-            #     genre = get_object_or_404(Genre, id=res['results'][j]['genre_ids'][k])
-            #     movie_genres.movie_id = movie['id']
-            #     movie_genres.genre_id = genre['id']
-            #     movie_genres.save()
+                # genres = []
+                # if res['results'][j]['genre_ids']:
+                #     for k in range(len(res['results'][j]['genre_ids'])):
+                #         print(res['results'][j]['genre_ids'][k])
+                #         genres.append(get_object_or_404(Genre, id=res['results'][j]['genre_ids'][k]))
+                #     print(genres)
+                # movie.genres = genres
+                movie.save()
 
 
     return redirect('movies:index')
@@ -64,8 +66,12 @@ def movie_api_url(request):
 @require_GET
 def detail(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
+    comments =  movie.moviecomment_set.all()
+    comment_form = MovieCommentForm()
     context = {
         'movie': movie,
+        'comments': comments,
+        'commnet_form': comment_form,
     }
     return render(request, 'movies/detail.html', context)
 
@@ -88,3 +94,21 @@ def like(request, movie_id):
         }
         return JsonResponse(data)
     return redirect('accounts:login')
+
+
+@require_POST
+def create_comment(request, movie_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+    comment_form = MovieCommentForm(request.POST)
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.movie = movie
+        comment.user = request.user
+        comment.save()
+        return redirect('movies:detail', movie.id)
+    context = {
+        'comment_form': comment_form,
+        'movie': movie,
+        'comments': movie.moviecomment_set.all(),
+    }
+    return render(request, 'movies/detail.html', context)
