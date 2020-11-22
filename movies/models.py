@@ -16,6 +16,11 @@ class Movie(models.Model):
     poster_path = models.CharField(max_length=200)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
+    actor = models.CharField(max_length=100)
+    director = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.title
 
 
 class MovieComment(models.Model):
