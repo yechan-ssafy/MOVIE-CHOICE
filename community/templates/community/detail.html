@@ -17,7 +17,7 @@
   {% endif %}
   {% for comment in comments %}
     <div>
-      {{ comment.user }} - {{ comment.content }}
+      {{ comment.user }} | {{ comment.content }}
     </div>
   {% empty %}
     <p><b>댓글이 없어요..</b></p>

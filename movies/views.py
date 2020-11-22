@@ -1,13 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .models import Movie, Genre
+from .models import Movie, Genre, MovieComment
 from .forms import MovieCommentForm
 
 import requests
 from pprint import pprint
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
-
 
 
 # Create your views here.
@@ -43,6 +42,8 @@ def movie_api_url(request):
         for j in range(len(res['results'])):
             movie = Movie()
             for _ in res['results'][j]:
+                if not res['results'][j]['genre_ids']:
+                    break
                 movie.title = res['results'][j]['title']
                 movie.release_date = res['results'][j]['release_date']
                 movie.popularity = res['results'][j]['popularity']
@@ -50,13 +51,7 @@ def movie_api_url(request):
                 movie.vote_average = res['results'][j]['vote_average']
                 movie.overview = res['results'][j]['overview']
                 movie.poster_path = 'https://image.tmdb.org/t/p/w500/' + res['results'][j]['poster_path']
-                # genres = []
-                # if res['results'][j]['genre_ids']:
-                #     for k in range(len(res['results'][j]['genre_ids'])):
-                #         print(res['results'][j]['genre_ids'][k])
-                #         genres.append(get_object_or_404(Genre, id=res['results'][j]['genre_ids'][k]))
-                #     print(genres)
-                # movie.genres = genres
+                movie.genre = get_object_or_404(Genre, id=res['results'][j]['genre_ids'][0])
                 movie.save()
 
 
@@ -112,3 +107,5 @@ def create_comment(request, movie_id):
         'comments': movie.moviecomment_set.all(),
     }
     return render(request, 'movies/detail.html', context)
+
+
