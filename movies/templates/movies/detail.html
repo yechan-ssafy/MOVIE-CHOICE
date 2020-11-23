@@ -10,9 +10,20 @@
   <br>
   <span>{{ movie.vote_average }}</span>
   <br>
-  {{ movie.genres }}
-  {% comment %} {% for genre in movie.genres %}
-  {% endfor %} {% endcomment %}
+  <form id="form_like" data-movieId="{{ movie.id }}" action="{% url 'movies:like' movie.id %}" method="POST" class="d-inline">
+    {% csrf_token %}
+    {% if user in movie.like_users.all %}
+      <button class="btn btn-link">
+        <i class="fas fa-heart fa-lg heart-{{ movie.id }}" style="color:crimson;"></i>
+      </button>
+    {% else %}
+      <button class="btn btn-link">
+        <i class="fas fa-heart fa-lg heart-{{ movie.id }}" style="color:black;"></i>
+      </button>
+    {% endif %}
+  </form>
+
+  <span id='likeCount-{{ movie.id }}'>{{ movie.like_users.all|length }}명이 이 영화를 좋아합니다.</span>
   <br>
   <video controls poster="aaa" preload="bbb">
   <source src="https://www.youtube.com/watch?v=jBdRhhSt3Bc" type="yyy">
@@ -52,3 +63,32 @@
   <br>
   <a href="{% url 'movies:index' %}">[back]</a>
 {% endblock  %}
+
+{% block script %}
+  <script>
+    const likeBtnForms = document.querySelectorAll('#form_like')
+    likeBtnForms.forEach(likeBtnForm => {
+      const movieId = likeBtnForm.dataset.movieid
+      likeBtnForm.addEventListener('click', function (e) {
+        e.preventDefault()
+        // 좋아요 요청 주소 :  path('<int:review_pk>/like/', views.like, name='like'),
+        const API_URL = `/movies/${movieId}/like/`
+        const csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
+        const options = {headers: {'X-CSRFToken': csrfToken}}
+
+        axios.post(API_URL, {}, options)
+          .then(res => {
+            const { is_like, like_count } = res.data
+            const likeHeart = document.querySelector(`.heart-${movieId}`)
+            likeHeart.style.color = is_like ? 'crimson' : 'black'
+            const countHeart = document.querySelector(`#likeCount-${movieId}`)
+            countHeart.innerText = `${like_count}명이 이글을 좋아합니다.`
+          })
+          .catch(err => {
+            console.error(err)
+          })
+
+      })
+    })
+  </script>
+{% endblock %}
