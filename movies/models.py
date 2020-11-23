@@ -6,6 +6,14 @@ class Genre(models.Model):
     name = models.CharField(max_length=50)
 
 
+# class Actor(models.Model):
+#     name = models.CharField(max_length=150)
+
+
+# class Director(models.Model):
+#     name = models.CharField(max_length=100)
+
+
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     release_date = models.DateField()
@@ -14,10 +22,12 @@ class Movie(models.Model):
     vote_average = models.FloatField()
     overview = models.TextField()
     poster_path = models.CharField(max_length=200)
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    genres = models.ManyToManyField(Genre, related_name='genre_movie')
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
-    actor = models.CharField(max_length=100)
-    director = models.CharField(max_length=50)
+    actor = models.CharField(max_length=150)
+    director = models.CharField(max_length=100)
+    # actor = models.ManyToManyField(Actor, related_name='actor_movie')
+    # director = models.ManyToManyField(Director, related_name='director_movie')
 
     def __str__(self):
         return self.title
