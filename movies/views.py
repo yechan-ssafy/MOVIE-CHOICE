@@ -8,6 +8,8 @@ from pprint import pprint
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
 
+from django.db.models import Q
+
 
 # Create your views here.
 @require_GET
@@ -42,7 +44,7 @@ def movie_api_url(request):
     }
 
 
-    for i in range(1, 100):
+    for i in range(1, 20):
         new_movie_api_url = movie_api_url + str(i)
         res = requests.get(new_movie_api_url).json()
         confirm = 0
@@ -149,3 +151,30 @@ def genre_movie_list(request, genre_name):
         'movie_list': movie_list,
     }
     return render(request, 'movies/genre_movie_list.html', context)
+
+
+@require_GET
+def search_movie(request):
+    movie_list = Movie.objects.all()
+    
+    search_keyword = request.GET.get('q', '')
+    search_type = request.GET.get('type', '')
+
+    search_movie_list = []
+    if search_keyword :
+        if len(search_keyword) >= 2 :
+            if search_type == 'all':
+                search_movie_list = movie_list.filter(Q (title__icontains=search_keyword) | Q (actor__icontains=search_keyword) | Q (overview__icontains=search_keyword))
+            elif search_type == 'title':
+                search_movie_list = movie_list.filter(title__icontains=search_keyword)
+            elif search_type == 'actor':
+                search_movie_list = movie_list.filter(actor__icontains=search_keyword)    
+            elif search_type == 'director':
+                search_movie_list = movie_list.filter(director__icontains=search_keyword)    
+            elif search_type == 'overview':
+                search_movie_list = movie_list.filter(overview__icontains=search_keyword)
+                
+    context = {
+        'search_movie_list': search_movie_list,
+    }
+    return render(request, 'movies/search_movie_list.html', context)
