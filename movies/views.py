@@ -37,12 +37,12 @@ def movie_api_url(request):
     naver_api_url = 'https://openapi.naver.com/v1/search/movie?'
     
     header = {
-        "X-Naver-Client-id" : 'ELlcPO7mm8iYXyhx6Gpg',
-        "X-naver-Client-secret" : 'sGOaBgO1pj'
+        "X-Naver-Client-id" : '848DPJEM0GA39OFuYr6a',
+        "X-naver-Client-secret" : '7LalejObp3'
     }
 
 
-    for i in range(1, 400):
+    for i in range(1, 100):
         new_movie_api_url = movie_api_url + str(i)
         res = requests.get(new_movie_api_url).json()
         confirm = 0
@@ -52,7 +52,7 @@ def movie_api_url(request):
             if not res['results'][j]['genre_ids']:
                 confirm = 1
             
-            new_naver_api_url = naver_api_url + f'&query={res["results"][j]["title"]}'
+            new_naver_api_url = naver_api_url + f'&query={res["results"][j]["title"]}&yearfrom={str(res["results"][j]["release_date"])[0:4]}&yearto={str(res["results"][j]["release_date"])[0:4]}'
             naver_res = requests.get(new_naver_api_url, headers = header).json()
             naver_movie_items = naver_res.get('items')
             if not naver_movie_items:
@@ -62,9 +62,8 @@ def movie_api_url(request):
                 director = ''
                 for naver_movie in naver_movie_items:
                     if naver_movie['title'] == f'<b>{res["results"][j]["title"]}</b>':
-                        if naver_movie['pubDate'] == str(res['results'][j]['release_date'])[0:4]:
-                            actor = naver_movie['actor']
-                            director = naver_movie['director']
+                        actor = naver_movie['actor']
+                        director = naver_movie['director']
                 if (not actor) or (not director):
                     confirm = 1
             
@@ -80,9 +79,11 @@ def movie_api_url(request):
                 movie.vote_average = res['results'][j]['vote_average']
                 movie.overview = res['results'][j]['overview']
                 movie.poster_path = 'https://image.tmdb.org/t/p/w500/' + res['results'][j]['poster_path']
-                movie.genre = get_object_or_404(Genre, id=res['results'][j]['genre_ids'][0])
                 movie.actor = actor
                 movie.director = director
+                movie.save()
+                for genre_id in res['results'][j]['genre_ids']:
+                    movie.genres.add(get_object_or_404(Genre, id=genre_id))
                 movie.save()
 
     return redirect('movies:index')
@@ -142,7 +143,7 @@ def create_comment(request, movie_id):
 @require_GET
 def genre_movie_list(request, genre_name):
     genre = get_object_or_404(Genre, name=genre_name)
-    movie_list = genre.movie_set.order_by('-vote_average')[:10]
+    movie_list = genre.genre_movie.order_by('-vote_average')[:10]
     context = {
         'genre': genre,
         'movie_list': movie_list,
