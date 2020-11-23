@@ -3,7 +3,10 @@
 {% block content %}
   <h1>Movies</h1>
   <hr>
+  <a href="{% url 'movies:search' %}"><h2>영화 검색</h2></a>
+  <br>
   <h2>장르별 추천</h2>
+  <hr>
   <br>
   <button id="left"> < </button><button id="right"> > </button>
   <div class="wrap">

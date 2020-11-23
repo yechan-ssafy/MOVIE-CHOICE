@@ -13,4 +13,5 @@ urlpatterns = [
     # path('<int:movie_id>/comments/<int:comment_pk>/update/', views.movie_comments_update, name='movie_comments_update'),
     path('<int:movie_id>/comments/<int:comment_pk>/delete/', views.movie_comments_delete, name='movie_comments_delete'),
     path('<str:genre_name>', views.genre_movie_list, name='genre_movie_list'),
+    path('search/', views.search_movie, name='search'),
 ]
