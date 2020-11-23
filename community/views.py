@@ -20,7 +20,7 @@ def index(request):
     notice_list = Review.objects.order_by('-id') 
     
     if search_keyword :
-        if len(search_keyword) > 1 :
+        if len(search_keyword) >= 1 :
             if search_type == 'all':
                 search_notice_list = notice_list.filter(Q (title__icontains=search_keyword) | Q (content__icontains=search_keyword) | Q (user__username__icontains=search_keyword))
             elif search_type == 'title_content':
