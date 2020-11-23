@@ -7,11 +7,13 @@ import requests
 from pprint import pprint
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
+from django.contrib.auth.decorators import login_required
 
 from django.db.models import Q
 
 
 # Create your views here.
+@login_required
 @require_GET
 def index(request):
     movie_list = Movie.objects.all()
@@ -91,6 +93,7 @@ def movie_api_url(request):
     return redirect('movies:index')
 
 
+@login_required
 @require_GET
 def detail(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
@@ -152,6 +155,7 @@ def movie_comments_delete(request, movie_id, comment_pk):
     return redirect('movies:detail', movie_id)
 
 
+@login_required
 @require_GET
 def genre_movie_list(request, genre_name):
     genre = get_object_or_404(Genre, name=genre_name)
@@ -163,6 +167,7 @@ def genre_movie_list(request, genre_name):
     return render(request, 'movies/genre_movie_list.html', context)
 
 
+@login_required
 @require_GET
 def search_movie(request):
     movie_list = Movie.objects.all()
