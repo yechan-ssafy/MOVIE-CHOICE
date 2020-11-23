@@ -10,7 +10,7 @@
   <hr>
   <a href="{% url 'movies:weather_api_url' %}">날씨 정보 갱신하기</a>
   <div>
-    <span>{{ weather.name }}에는 이 영화가 어떨까?</span>
+    <span>"{{ weather.name }}"에는 이 영화가 어떨까?</span>
     <br>
     {% for weather_movie in weather_movies %}
       <a href="{% url 'movies:detail' weather_movie.id %}"><span>{{ weather_movie.title }}</span></a>
