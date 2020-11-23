@@ -6,11 +6,42 @@ from django.http import JsonResponse
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.decorators import login_required
 
+from django.contrib import messages
+from django.db.models import Q
+
 
 @login_required
 @require_GET
 def index(request):
     reviews = Review.objects.all()
+
+    ### 검색 기능
+    search_keyword = request.GET.get('q', '')
+    search_type = request.GET.get('type', '')
+    notice_list = Review.objects.order_by('-id') 
+    
+    if search_keyword :
+        if len(search_keyword) >= 1 :
+            if search_type == 'all':
+                search_notice_list = notice_list.filter(Q (title__icontains=search_keyword) | Q (content__icontains=search_keyword) | Q (user__username__icontains=search_keyword))
+            elif search_type == 'title_content':
+                search_notice_list = notice_list.filter(Q (title__icontains=search_keyword) | Q (content__icontains=search_keyword))
+            elif search_type == 'title':
+                search_notice_list = notice_list.filter(title__icontains=search_keyword)    
+            elif search_type == 'content':
+                search_notice_list = notice_list.filter(content__icontains=search_keyword)    
+            elif search_type == 'writer':
+                search_notice_list = notice_list.filter(user__username__icontains=search_keyword)
+            # else:
+                # messages.error(request, '일치하는 검색어가 없습니다.')
+
+        # else:
+            # messages.error(request, '검색어는 2글자 이상 입력해주세요.')
+
+        reviews = search_notice_list
+            # print(reviews)
+
+    ### pagination
     total_len = len(reviews)
     paginator = Paginator(reviews, 3)
     page = request.GET.get('page', 1)
@@ -162,3 +193,4 @@ def like(request, review_pk):
         }
         return JsonResponse(data)
     return redirect('accounts:login')
+
