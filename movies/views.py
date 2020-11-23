@@ -18,9 +18,18 @@ from django.db.models import Q
 def index(request):
     movie_list = Movie.objects.all()
     genres = Genre.objects.all()
+    like_movies = request.user.like_movies.all()
+    like_movie_director_movie_list = []
+    for movie in movie_list:
+        for like_movie in like_movies:
+            if movie.director == like_movie.director:
+                if movie not in like_movie_director_movie_list:
+                    like_movie_director_movie_list.append(movie)
     context = {
         'movie_list': movie_list,
         'genres': genres,
+        'like_movies': like_movies,
+        'like_movie_director_movie_list': like_movie_director_movie_list,
     }
 
     return render(request, 'movies/index.html', context)
