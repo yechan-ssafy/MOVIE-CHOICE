@@ -41,12 +41,14 @@
       <a href="{% url 'movies:detail' like_movie_director_movie.id %}"><h3>{{ like_movie_director_movie.title }}</h3></a>
     {% endfor %}
   </div>
-  {% comment %} <!-- 좋아요한 영화와 같은 장르의 영화 평점 높은 순으로 정렬 -->
+  <!-- 좋아요한 영화와 같은 장르의 영화 평점 높은 순으로 정렬 -->
   <h2>#취향저격!</h2>
   <hr>
   <div>
-
-  </div> {% endcomment %}
+    {% for like_movie_genre_movie in like_movie_genre_movie_list %}
+      <a href="{% url 'movies:detail' like_movie_genre_movie.id %}">{{ like_movie_genre_movie }}</a>
+    {% endfor %}
+  </div>
 
 {% endblock %}
 

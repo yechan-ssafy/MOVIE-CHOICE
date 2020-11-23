@@ -6,14 +6,6 @@ class Genre(models.Model):
     name = models.CharField(max_length=50)
 
 
-# class Actor(models.Model):
-#     name = models.CharField(max_length=150)
-
-
-# class Director(models.Model):
-#     name = models.CharField(max_length=100)
-
-
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     release_date = models.DateField()
@@ -26,8 +18,6 @@ class Movie(models.Model):
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
     actor = models.CharField(max_length=150)
     director = models.CharField(max_length=100)
-    # actor = models.ManyToManyField(Actor, related_name='actor_movie')
-    # director = models.ManyToManyField(Director, related_name='director_movie')
 
     def __str__(self):
         return self.title

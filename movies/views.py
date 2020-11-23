@@ -19,17 +19,36 @@ def index(request):
     movie_list = Movie.objects.all()
     genres = Genre.objects.all()
     like_movies = request.user.like_movies.all()
+    
     like_movie_director_movie_list = []
     for movie in movie_list:
         for like_movie in like_movies:
             if movie.director == like_movie.director:
                 if movie not in like_movie_director_movie_list:
                     like_movie_director_movie_list.append(movie)
+    
+    like_movie_genre_list = []
+    for like_movie in like_movies:
+        for like_movie_genre in like_movie.genres.all():
+            like_movie_genre_list.append(like_movie_genre)
+    
+    like_movie_genre_movie_list = []
+    for like_movie_genre_movies in like_movie_genre_list:
+        cnt = 0
+        for like_movie_genre_movie in like_movie_genre_movies.genre_movie.all():
+            if like_movie_genre_movie not in like_movie_genre_movie_list:
+                like_movie_genre_movie_list.append(like_movie_genre_movie)
+                cnt += 1
+            if cnt == 10:
+                break
+
     context = {
         'movie_list': movie_list,
         'genres': genres,
         'like_movies': like_movies,
         'like_movie_director_movie_list': like_movie_director_movie_list,
+        'like_movie_genre_list': like_movie_genre_list,
+        'like_movie_genre_movie_list': like_movie_genre_movie_list,
     }
 
     return render(request, 'movies/index.html', context)
@@ -168,7 +187,7 @@ def movie_comments_delete(request, movie_id, comment_pk):
 @require_GET
 def genre_movie_list(request, genre_name):
     genre = get_object_or_404(Genre, name=genre_name)
-    movie_list = genre.genre_movie.order_by('-vote_average')[:10]
+    movie_list = genre.genre_movie.all()
     context = {
         'genre': genre,
         'movie_list': movie_list,
