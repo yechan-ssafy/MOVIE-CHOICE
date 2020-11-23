@@ -6,9 +6,17 @@
   <br>
   <img src="{{ movie.poster_path }}" alt="{{ movie.title }}">
   <br>
-  <span>{{ movie.overview }}</span>
+  {% if movie.overview %}
+    <span>줄거리 : {{ movie.overview }}</span>
+  {% else %}
+    <span>줄거리가 없습니다.</span>
+  {% endif %}
   <br>
-  <span>{{ movie.vote_average }}</span>
+  <span>평점 : {{ movie.vote_average }}</span>
+  <br>
+  {% for movie_genre in movie.genres.all %}
+    <span>{{ movie_genre.name }}</span>
+  {% endfor %}
   <br>
   <form id="form_like" data-movieId="{{ movie.id }}" action="{% url 'movies:like' movie.id %}" method="POST" class="d-inline">
     {% csrf_token %}
