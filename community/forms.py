@@ -6,11 +6,11 @@ class ReviewForm(forms.ModelForm):
     
     class Meta:
         model = Review
-        fields = ['title', 'content']
+        fields = ['title', 'movie', 'rank', 'content']
 
 
 class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        exclude = ['review', 'user']
+        fields = ['content']
