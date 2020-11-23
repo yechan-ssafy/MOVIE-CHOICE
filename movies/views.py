@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .models import Movie, Genre, MovieComment
+from .models import Movie, Genre, MovieComment, Weather
 from .forms import MovieCommentForm
 
 import requests
+import json
 from pprint import pprint
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
@@ -38,17 +39,37 @@ def index(request):
         for like_movie_genre_movie in like_movie_genre_movies.genre_movie.all():
             if like_movie_genre_movie not in like_movie_genre_movie_list:
                 like_movie_genre_movie_list.append(like_movie_genre_movie)
-                cnt += 1
+            cnt += 1
             if cnt == 10:
                 break
+
+    weather = Weather.objects.all()[0]
+
+    if weather.id // 100 == 2:
+        genre = get_object_or_404(Genre, id=27)
+    elif weather.id // 100 == 3:
+        genre = get_object_or_404(Genre, id=80)
+    elif weather.id // 100 == 5:
+        genre = get_object_or_404(Genre, id=53)
+    elif weather.id // 100 == 6:
+        genre = get_object_or_404(Genre, id=14)
+    elif weather.id // 100 == 7:
+        genre = get_object_or_404(Genre, id=9648)
+    elif weather.id // 100 == 8:
+        genre = get_object_or_404(Genre, id=10749)
+    elif weather.id // 100 == 9:
+        genre = get_object_or_404(Genre, id=12)
+    
+    weather_movies = genre.genre_movie.all()[:10]
 
     context = {
         'movie_list': movie_list,
         'genres': genres,
         'like_movies': like_movies,
         'like_movie_director_movie_list': like_movie_director_movie_list,
-        'like_movie_genre_list': like_movie_genre_list,
         'like_movie_genre_movie_list': like_movie_genre_movie_list,
+        'weather': weather,
+        'weather_movies': weather_movies,
     }
 
     return render(request, 'movies/index.html', context)
@@ -74,7 +95,7 @@ def movie_api_url(request):
     }
 
 
-    for i in range(1, 20):
+    for i in range(1, 15):
         new_movie_api_url = movie_api_url + str(i)
         res = requests.get(new_movie_api_url).json()
         confirm = 0
@@ -94,8 +115,8 @@ def movie_api_url(request):
                 director = ''
                 for naver_movie in naver_movie_items:
                     if naver_movie['title'] == f'<b>{res["results"][j]["title"]}</b>':
-                        actor = naver_movie['actor']
-                        director = naver_movie['director']
+                        actor = naver_movie['actor'][:len(naver_movie['actor'])-1]
+                        director = naver_movie['director'][:len(naver_movie['director'])-1]
                 if (not actor) or (not director):
                     confirm = 1
             
@@ -117,9 +138,41 @@ def movie_api_url(request):
                 for genre_id in res['results'][j]['genre_ids']:
                     movie.genres.add(get_object_or_404(Genre, id=genre_id))
                 movie.save()
+    
+    weather_URL = 'http://api.openweathermap.org/data/2.5/weather?q=Seoul,kr&appid=db742ca54c4ec840bca1892c6eace001&lang=kr'
+
+    weather_res = requests.get(weather_URL)
+    weather_data = json.loads(weather_res.text)
+
+    weather = Weather.objects.all()
+    if weather:
+        weather.delete()
+
+    weather = Weather()
+    weather.id = weather_data['weather'][0]['id']
+    weather.name = weather_data['weather'][0]['description']
+    weather.save()
 
     return redirect('movies:index')
 
+
+def weather_api_url(request):
+    weather_URL = 'http://api.openweathermap.org/data/2.5/weather?q=Seoul,kr&appid=db742ca54c4ec840bca1892c6eace001&lang=kr'
+
+    weather_res = requests.get(weather_URL)
+    weather_data = json.loads(weather_res.text)
+
+    weather = Weather.objects.all()
+    if weather:
+        weather.delete()
+
+    weather = Weather()
+    weather.id = weather_data['weather'][0]['id']
+    weather.name = weather_data['weather'][0]['description']
+    weather.save()
+
+    return redirect('movies:index')
+    
 
 @login_required
 @require_GET

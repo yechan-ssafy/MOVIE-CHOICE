@@ -28,3 +28,7 @@ class MovieComment(models.Model):
     rank = models.IntegerField()
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+
+class Weather(models.Model):
+    name = models.CharField(max_length=50)

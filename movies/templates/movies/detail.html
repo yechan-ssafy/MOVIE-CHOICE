@@ -6,6 +6,10 @@
   <br>
   <img src="{{ movie.poster_path }}" alt="{{ movie.title }}">
   <br>
+  <span>감독 : {{ movie.director }}</span>
+  <br>
+  <span>배우 : {{ movie.actor }}</span>
+  <br>
   {% if movie.overview %}
     <span>줄거리 : {{ movie.overview }}</span>
   {% else %}

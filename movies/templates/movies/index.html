@@ -5,6 +5,18 @@
   <hr>
   <a href="{% url 'movies:search' %}"><h2>영화 검색</h2></a>
   <br>
+  <!-- 날씨 상태에 따라 영화 추천 -->
+  <h2>#날씨별 영화 추천</h2>
+  <hr>
+  <a href="{% url 'movies:weather_api_url' %}">날씨 정보 갱신하기</a>
+  <div>
+    <span>{{ weather.name }}에는 이 영화가 어떨까?</span>
+    <br>
+    {% for weather_movie in weather_movies %}
+      <a href="{% url 'movies:detail' weather_movie.id %}"><span>{{ weather_movie.title }}</span></a>
+    {% endfor %}
+  </div>
+  <br>
   <h2>#장르별 추천</h2>
   <hr>
   <br>
