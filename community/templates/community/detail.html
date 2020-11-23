@@ -12,7 +12,8 @@
   <p>수정 시각: {{ review.updated_at }}</p>
   <hr>
   {% if request.user == review.user %}
-    <a href="{% url 'community:update' review.pk %}">UPDATE</a><br>
+    <a href="{% url 'community:update' review.pk %}">UPDATE</a>
+    <br>
     <form action="{% url 'community:delete' review.pk %}" method="POST">
       {% csrf_token %}
       <input type="submit" value="DELETE">
@@ -26,7 +27,7 @@
   {% endif %}
   {% for comment in comments %}
     <div>
-      {{ comment.user }} | {{ comment.content }}
+      {{ comment.user }} - {{ comment.content }} | {{ comment.created_at }}
       {% if request.user == comment.user %}
         <form action="{% url 'community:comments_delete' review.pk comment.pk %}" method="POST" class="d-inline">
           {% csrf_token %}

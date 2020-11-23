@@ -9,7 +9,9 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('<int:movie_id>/', views.detail, name="detail"),
     path('<int:movie_id>/like/', views.like, name="like"),
-    path('<int:movie_id>/comments/', views.create_comment, name='create_comment'),
+    path('<int:movie_id>/comments/', views.movie_comment_create, name='movie_comment_create'),
+    # path('<int:movie_id>/comments/<int:comment_pk>/update/', views.movie_comments_update, name='movie_comments_update'),
+    path('<int:movie_id>/comments/<int:comment_pk>/delete/', views.movie_comments_delete, name='movie_comments_delete'),
     path('<str:genre_name>', views.genre_movie_list, name='genre_movie_list'),
     path('search/', views.search_movie, name='search'),
 ]

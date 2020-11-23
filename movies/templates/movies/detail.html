@@ -10,13 +10,15 @@
   <br>
   <span>{{ movie.vote_average }}</span>
   <br>
-  <span>{{ movie.genre.name }}</span>
+  {{ movie.genres }}
+  {% comment %} {% for genre in movie.genres %}
+  {% endfor %} {% endcomment %}
   <br>
   <video controls poster="aaa" preload="bbb">
   <source src="https://www.youtube.com/watch?v=jBdRhhSt3Bc" type="yyy">
   </video>
   <br>
-  {% comment %} <a href="{% url 'community:create' movie.id %}">리뷰 쓰러 가기</a> {% endcomment %}
+  <a href="{% url 'community:index' %}">리뷰 쓰러 가기</a>
   <br>
   <h4>댓글 목록</h4>
   {% if comments|length %}
@@ -27,13 +29,19 @@
       {{ comment.user }}
       <br>
       {{ comment.rank }} - {{ comment.content }}
+      {% if request.user == comment.user %}
+        <form action="{% url 'movies:movie_comments_delete' movie.id comment.pk %}" method="POST" class="d-inline">
+          {% csrf_token %}
+          <input type="submit" value="DELETE">
+        </form>
+      {% endif %}
     </div>
   {% empty %}
     <p><b>평점이 없습니다</b></p>
   {% endfor %}
   <hr>
   {% if request.user.is_authenticated %}
-    <form action="{% url 'movies:create_comment' movie.id %}" method="POST">
+    <form action="{% url 'movies:movie_comment_create' movie.id %}" method="POST">
       {% csrf_token %}
       {{ comment_form }}
       <input type="submit" value="평점쓰기">
