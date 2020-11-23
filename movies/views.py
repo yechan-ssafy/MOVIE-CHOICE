@@ -37,12 +37,12 @@ def movie_api_url(request):
     naver_api_url = 'https://openapi.naver.com/v1/search/movie?'
     
     header = {
-        "X-Naver-Client-id" : 'ELlcPO7mm8iYXyhx6Gpg',
-        "X-naver-Client-secret" : 'sGOaBgO1pj'
+        "X-Naver-Client-id" : '848DPJEM0GA39OFuYr6a',
+        "X-naver-Client-secret" : '7LalejObp3'
     }
 
 
-    for i in range(1, 400):
+    for i in range(1, 50):
         new_movie_api_url = movie_api_url + str(i)
         res = requests.get(new_movie_api_url).json()
         confirm = 0
