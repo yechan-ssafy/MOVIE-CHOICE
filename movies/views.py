@@ -47,25 +47,34 @@ def index(request):
 
     if weather.name[33:35] == '01':
         genre = get_object_or_404(Genre, id=10749)
+        weather_text = '맑은 날씨입니다.'
     elif weather.name[33:35] == '02':
         genre = get_object_or_404(Genre, id=35)
+        weather_text = '약간 구름이 있는 날씨입니다.'
     elif weather.name[33:35] == '03':
         genre = get_object_or_404(Genre, id=12)
+        weather_text = '구름낀 날씨입니다.'
     elif weather.name[33:35] == '04':
         genre = get_object_or_404(Genre, id=18)
+        weather_text = '구름이 많은 날씨입니다.'
     elif weather.name[33:35] == '09':
         genre = get_object_or_404(Genre, id=80)
+        weather_text = '약간 비오는 날씨입니다.'
     elif weather.name[33:35] == '10':
         genre = get_object_or_404(Genre, id=53)
+        weather_text = '비오는 날씨입니다.'
     elif weather.name[33:35] == '11':
         genre = get_object_or_404(Genre, id=27)
+        weather_text = '천둥 번개치는 날씨입니다.'
     elif weather.name[33:35] == '13':
         genre = get_object_or_404(Genre, id=14)
+        weather_text = '눈오는 날씨입니다.'
     elif weather.name[33:35] == '50':
         genre = get_object_or_404(Genre, id=9648)
+        weather_text = '안개낀 날씨입니다.'
     
     
-    weather_movies = genre.genre_movie.all()[:12]
+    weather_movies = genre.genre_movie.all()[:6]
 
     context = {
         'movie_list': movie_list,
@@ -74,6 +83,7 @@ def index(request):
         'like_movie_director_movie_list': like_movie_director_movie_list,
         'like_movie_genre_movie_list': like_movie_genre_movie_list,
         'weather': weather,
+        'weather_text': weather_text,
         'weather_movies': weather_movies,
     }
 
