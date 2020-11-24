@@ -20,7 +20,19 @@
                     <!--작성자, 조회수-->
                     <div>
                         <span><i class="fas fa-user-edit"></i>&nbsp;작성자 : {{ review.user }}</span>
-                        <span style="float:right;">좋아요 수 : {{ review.like_users.all|length }}</span>
+                        <span id='likeCount-{{ review.pk }}' style="float:right;">좋아요 수 : {{ review.like_users.all|length }}</span>
+                        <form id="form_like" data-reviewId="{{ review.pk }}"action="{% url 'community:like' review.pk %}" method="POST" class="d-inline" style="float:right;">
+                          {% csrf_token %}
+                          {% if user in review.like_users.all %}
+                            <button class="btn btn-link">
+                              <i class="fas fa-heart fa-lg heart-{{ review.pk }}" style="color:crimson;"></i>
+                            </button>
+                          {% else %}
+                            <button class="btn btn-link">
+                              <i class="fas fa-heart fa-lg heart-{{ review.pk }}" style="color:black;"></i>
+                            </button>
+                          {% endif %}
+                        </form>
                     </div>
                     <hr>
                     {% if notice.upload_files %}
@@ -214,6 +226,31 @@
   <script>
     document.getElementById('id_content').placeholder = '댓글을 입력해주세요.';
     document.getElementById('id_content').rows = 3;
+
+    const likeBtnForms = document.querySelectorAll('#form_like')
+    likeBtnForms.forEach(likeBtnForm => {
+      const reviewId = likeBtnForm.dataset.reviewid
+      likeBtnForm.addEventListener('click', function (e) {
+        e.preventDefault()
+        // 좋아요 요청 주소 :  path('<int:review_pk>/like/', views.like, name='like'),
+        const API_URL = `/community/${reviewId}/like/`
+        const csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
+        const options = {headers: {'X-CSRFToken': csrfToken}}
+
+        axios.post(API_URL, {}, options)
+          .then(res => {
+            const { is_like, like_count } = res.data
+            const likeHeart = document.querySelector(`.heart-${reviewId}`)
+            likeHeart.style.color = is_like ? 'crimson' : 'black'
+            const countHeart = document.querySelector(`#likeCount-${reviewId}`)
+            countHeart.innerText = `좋아요 수 : ${like_count}`
+          })
+          .catch(err => {
+            console.error(err)
+          })
+
+      })
+    })
   
   </script>
 {% endblock %}
