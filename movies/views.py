@@ -202,7 +202,6 @@ def detail(request, movie_id):
         'comments': comments,
         'commnet_form': comment_form,
     }
-    print(movie)
     return render(request, 'movies/detail.html', context)
 
 
@@ -239,9 +238,30 @@ def movie_comment_create(request, movie_id):
     context = {
         'comment_form': comment_form,
         'movie': movie,
-        'comments': movie.moviecomment_set.all(),
     }
-    return render(request, 'movies/detail.html', context)
+    return render(request, 'movies/comment_create.html', context)
+
+
+@login_required
+@require_http_methods(['GET', 'POST'])
+def movie_comments_update(request, movie_id, comment_pk):
+    movie = get_object_or_404(Movie, id=movie_id)
+    movie_comment = get_object_or_404(MovieComment, pk=comment_pk)
+    if request.user == movie_comment.user:
+        if request.method == 'POST':
+            comment_form = MovieCommentForm(request.POST, instance=movie_comment)
+            if comment_form.is_valid():
+                comment_form.save()
+                return redirect('movies:detail', movie.id)
+        else:
+            comment_form = MovieCommentForm(instance=movie_comment)
+    else:
+        return redirect('movies:index')
+    context = {
+        'comment_form': comment_form,
+        'movie': movie,
+    }
+    return render(request, 'movies/comment_update.html', context)
 
 
 @require_POST
