@@ -1,12 +1,108 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1 class="text-center">CREATE</h1>
-  <form action="" method="POST">
+  {% comment %} <h1 class="text-center">CREATE</h1> {% endcomment %}
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-12">
+            <h4 style="font-weight: bold;">글쓰기</h4>
+        </div>
+    </div>
+
+    <div class="row-mt-5">
+        <!--본문-->
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card" style="width: 100%;">
+                <!--제목,분류,작성일-->
+                <div class="card-header" style="padding: 0rem 0.8rem">
+                    <div class="md-form form-group" style="margin-top: 8.5px;">
+                        <div style="padding: 0 5.5px;">
+                            <!-- <label for="form_title" class="control-label">{{ form.title.label }}</label> -->
+                            {{ form.title }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class=" col-sm-12">
+                            {{ form.movie }}<br>
+                            {{ form.rank }}<br>
+                            <hr>
+                            {{ form.content }}
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    {% comment %} <!--내용-->
+                    {{ form.content }} {% endcomment %}
+                </div>
+            </div>
+            
+            <div class="card-footer" style="padding-left: 0px; margin-top:18px;">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        {% comment %} {{ form.upload_files }}
+                        <small id="help" class="form-text text-muted" style="margin-bottom: -15px;">
+                            &nbsp;&nbsp;[파일 업로드]&nbsp;&nbsp;<i class="fas fa-upload"></i>&nbsp;10MB 이하의 파일만 첨부 가능합니다. 여러 파일은 압축해서 업로드해주세요.
+                        </small> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+            <div class="text-right" style="margin-top: 10px;">
+                {% comment %} <label>
+                    {{ form.top_fixed }}
+                    <span style="padding-bottom: 35px; color:black; font-weight: bold;">상단에 표시하기</span>
+                </label> {% endcomment %}
+                {% if edit %}
+                <button type="submit" id="write" class="btn btn-sm">{{ edit }}</button>
+                {% else %}
+                <button type="submit" id="write" class="btn btn-sm">작성하기</button>
+                {% endif %}
+                <input type="checkbox" id="fileChangeCheck" name="fileChange" style="display: none;">
+            </div>
+        </form>
+        <a href="{% url 'community:index' %}">뒤로가기</a>
+    </div>
+</div>
+
+
+  <!-- 기존 게시글 -->
+  {% comment %} <form action="" method="POST">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit">
   </form>
   <hr>
-  <a href="{% url 'community:index' %}">[back]</a>
+  <a href="{% url 'community:index' %}">[back]</a> {% endcomment %}
+{% endblock %}
+
+{% block style %}
+  #id_title {
+    width: 80%;
+  }
+  #id_content {
+    margin-top: 6px;
+    width: 100%;
+  }
+  #id_movie {
+    margin-top: 6px;
+    width: 50%;
+  }
+  #id_rank {
+    margin-top: 6px;
+    width: 30%;
+  }
+{% endblock %}
+
+{% block script %}
+  <script>
+    document.getElementById('id_rank').placeholder = '평점을 입력해주세요.';
+    document.getElementById('id_movie').placeholder = '영화제목을 입력해주세요.';
+    document.getElementById('id_content').placeholder = '내용을 입력해주세요.';
+    document.getElementById('id_title').placeholder = '리뷰 제목을 입력해주세요.';
+    document.getElementById('id_content').rows = 10;
+  
+  </script>
 {% endblock %}
