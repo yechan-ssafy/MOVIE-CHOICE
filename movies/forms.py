@@ -6,4 +6,5 @@ class MovieCommentForm(forms.ModelForm):
 
     class Meta:
         model = MovieComment
-        fields = ['content', 'rank']
+        fields = ['rank', 'content']
+        # exclude = ['movie', 'user']
