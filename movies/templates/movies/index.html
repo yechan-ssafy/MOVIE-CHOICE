@@ -14,7 +14,7 @@
     <h2 class="font02">#날씨별 영화 추천</h2>
     <a href="{% url 'movies:weather_api_url' %}">날씨 정보 갱신하기</a>
     <div>
-      <h3 class="font03">"{{ weather.name }}"에는 이 영화가 어떨까?</h3>
+      <img src="{{ weather.name }}">
       <br>
       <div class="row row-cols-1 row-cols-md-6">
         {% for weather_movie in weather_movies %}

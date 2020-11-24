@@ -45,22 +45,27 @@ def index(request):
 
     weather = Weather.objects.all()[0]
 
-    if weather.id // 100 == 2:
-        genre = get_object_or_404(Genre, id=27)
-    elif weather.id // 100 == 3:
-        genre = get_object_or_404(Genre, id=80)
-    elif weather.id // 100 == 5:
-        genre = get_object_or_404(Genre, id=53)
-    elif weather.id // 100 == 6:
-        genre = get_object_or_404(Genre, id=14)
-    elif weather.id // 100 == 7:
-        genre = get_object_or_404(Genre, id=9648)
-    elif weather.id // 100 == 8:
+    if weather.name[33:35] == '01':
         genre = get_object_or_404(Genre, id=10749)
-    elif weather.id // 100 == 9:
+    elif weather.name[33:35] == '02':
+        genre = get_object_or_404(Genre, id=35)
+    elif weather.name[33:35] == '03':
         genre = get_object_or_404(Genre, id=12)
+    elif weather.name[33:35] == '04':
+        genre = get_object_or_404(Genre, id=18)
+    elif weather.name[33:35] == '09':
+        genre = get_object_or_404(Genre, id=80)
+    elif weather.name[33:35] == '10':
+        genre = get_object_or_404(Genre, id=53)
+    elif weather.name[33:35] == '11':
+        genre = get_object_or_404(Genre, id=27)
+    elif weather.name[33:35] == '13':
+        genre = get_object_or_404(Genre, id=14)
+    elif weather.name[33:35] == '50':
+        genre = get_object_or_404(Genre, id=9648)
     
-    weather_movies = genre.genre_movie.all()[:10]
+    
+    weather_movies = genre.genre_movie.all()[:12]
 
     context = {
         'movie_list': movie_list,
@@ -150,7 +155,8 @@ def movie_api_url(request):
 
     weather = Weather()
     weather.id = weather_data['weather'][0]['id']
-    weather.name = weather_data['weather'][0]['description']
+    weather_img_url = f'http://openweathermap.org/img/wn/{weather_data["weather"][0]["icon"]}@2x.png'
+    weather.name = weather_img_url
     weather.save()
 
     return redirect('movies:index')
@@ -168,7 +174,8 @@ def weather_api_url(request):
 
     weather = Weather()
     weather.id = weather_data['weather'][0]['id']
-    weather.name = weather_data['weather'][0]['description']
+    weather_img_url = f'http://openweathermap.org/img/wn/{weather_data["weather"][0]["icon"]}@2x.png'
+    weather.name = weather_img_url
     weather.save()
 
     return redirect('movies:index')
