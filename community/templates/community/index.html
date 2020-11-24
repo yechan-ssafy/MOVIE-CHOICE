@@ -1,42 +1,108 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1 class="text-center">Community</h1>
-  <form action="" method="GET">
-    <div class="col">
-      <div style="float: right;" class="form-row">
-        <div class="form-row">
-          <div class="col" style="margin-top: 10px;">
-              <select style="width: 6em;" class="custom-select custom-select-md" name="type">
-                  <option value="all">전체</option>
-                  <option value="title_content">제목+내용</option>
-                  <option value="title">제목</option>
-                  <option value="content">내용</option>
-                  <option value="writer">작성자</option>
-              </select>
-          </div>
-          <div class="col" style="margin-top: 10px;">
-              <input type="text" name="q" value="{{ q }}" class="form-control form-control-md"
-                  style="width: 15em;" placeholder="검색어를 입력해주세요.">
-          </div>
-          <div class="col">
-              <!-- <button class="btn btn-md btn-outline-dark" type="submit">검색</button> -->
-              <button class="btn btn-sm" type="submit" id="search_btn">검색</button>
+  <h1 class="text-center font01">Community</h1>
+
+  <!-- 새로운 커뮤니티 게시판-->
+  <div class="container">
+    <hr>
+    {% if not user.is_authenticated %}
+      <a href="{% url 'accounts:login' %}">[새 글을 작성하려면 로그인하세요]</a>
+    {% else %}
+      <a href="{% url 'community:create' %}" class="btn btn-sm btn-primary mb-5">글쓰기</a>
+    {% endif %}
+        <table class="table table-sm table-hover">
+            <thead style="border-top: 1px solid #dee2e6;">
+                <tr class="text-center">
+                    <th style="font-weight: bold; font-size: 16px;">번호</th>
+                    <th style="font-weight: bold; font-size: 16px;">제목</th>
+                    <th style="font-weight: bold; font-size: 16px;">영화 제목</th>
+                    <th style="font-weight: bold; font-size: 16px;">작성자</th>
+                    <th style="font-weight: bold; font-size: 16px;">등록일</th>
+                    <th style="font-weight: bold; font-size: 16px;">수정일</th>
+                    <th style="font-weight: bold; font-size: 16px;">좋아요 수</th>
+                </tr>
+
+            </thead>
+            <tbody>
+
+                {% for review in users %}
+                <tr class="text-center" style="cursor:pointer;" onclick="location.href='{% url 'community:detail' review.pk %}'">
+                    <td style="font-weight: 500;">{{ review.pk }}</td>
+                    <td class="text-left" style="width:30%; font-weight: 600;"><a id="notice-{{ notice.id }}">{{ review.title|truncatechars:30 }}</a></td>
+                    <td style="width:20%; font-weight: 600;">{{ review.movie|truncatechars:20 }}</td>
+                    {% comment %} <td style="font-weight: 500;">{{ review.movie }}</td> {% endcomment %}
+                    <td style="font-weight: 500;"><a href="{% url 'accounts:profile' review.user.username %}">{{ review.user }}</a></td>
+                    <td style="font-weight: 500;">{{ review.created_at|date:'Y. m. d' }}</td>
+                    <td style="font-weight: 500;">{{ review.updated_at|date:'Y. m. d' }}</td>
+                    <td style="font-weight: 500;">{{ review.like_users.all|length }}</td>
+                </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+        <!-- 검색 창 -->
+      <form action="" method="GET">
+        <div class="col">
+          <div style="float: right;" class="form-row">
+            <div class="form-row d-flex row justify-content-center align-items-center">
+              <div class="col" style="margin-top: 10px;">
+                  <select style="width: 6em;" class="custom-select custom-select-md" name="type">
+                      <option value="all">전체</option>
+                      <option value="title_content">제목+내용</option>
+                      <option value="title">제목</option>
+                      <option value="content">내용</option>
+                      <option value="writer">작성자</option>
+                  </select>
+              </div>
+              <div class="col" style="margin-top: 10px;">
+                  <input type="text" name="q" value="{{ q }}" class="form-control form-control-md"
+                      style="width: 15em;" placeholder="검색어를 입력해주세요.">
+              </div>
+              <div class="col">
+                  <!-- <button class="btn btn-md btn-outline-dark" type="submit">검색</button> -->
+                  <button class="btn btn-sm btn-primary mt-2" type="submit" id="search_btn">검색</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </form>
-  {% comment %} {% if q %}
-    <h5 style="color: gray; font-weight: 550;"><i class="fas fa-search"></i>&nbsp;'{{ q }}' 검색 결과입니다.</h5>
-  {% endif %} {% endcomment %}
+      </form>
 
-  {% if not user.is_authenticated %}
-    <a href="{% url 'accounts:login' %}">[새 글을 작성하려면 로그인하세요]</a>
-  {% else %}
-    <a href="{% url 'community:create' %}">NEW</a>
+      <!-- pagination -->
+  {% if users.has_other_pages %}
+    <ul class="pagination d-flex row justify-content-center">
+      {% if users.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ users.previous_page_number }}">&laquo;</a></li>
+      {% endif %}
+
+      {% if users.number > 4 %}
+        <li class="page-item"><a class="page-link" href="?page={{ 1 }}">1</a></li>
+        <li class="page-item"><span class="page-link">...<span class="sr-only">...</span></span></li>
+      {% endif %}
+
+      {% for i in page_range %}
+        {% if users.number == i %}
+          <li class="page-item active"><span class="page-link">{{ i }}<span class="sr-only">(current)</span></span></li>
+        {% else %}
+          <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+
+      {% if users.number < prev_max_index %}
+        <li class="page-item"><span class="page-link">...<span class="sr-only">...</span></span></li>
+        <li class="page-item"><a class="page-link" href="?page={{ max_index|add:"1" }}">{{ max_index|add:"1" }}</a></li>
+      {% endif %}
+
+      {% if users.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ users.next_page_number }}">&raquo;</a></li>
+      {% endif %}
+    </ul>
   {% endif %}
-  <hr>
+    </div>
+    <hr>
+    
+  
+  <!-- 기존 게시글 목록 -->
   {% for review in users %}
     <p><b>작성자 : <a href="{% url 'accounts:profile' review.user.username %}">{{ review.user }}</a></b></p>
     <p>글 번호: {{ review.pk }}</p>

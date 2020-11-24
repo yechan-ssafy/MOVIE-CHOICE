@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block content %}  
-  <h1 class="text-center font02">{{ person.username }}님의 프로필</h1>
+  {% comment %} <h1 class="text-center font02">{{ person.username }}님의 프로필</h1> {% endcomment %}
+  <div class="container">
   {% include 'accounts/_follow.html' %}
 
   <hr>
@@ -60,7 +61,8 @@
       </div>
     </div>
 
-  <a href="{% url 'community:index' %}">[back]</a>
+  <a href="{% url 'community:index' %}">뒤로가기</a>
+  </div>
 {% endblock %}
 
 {% block script %}

@@ -1,7 +1,140 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2 class="text-center">DETAIL</h2>
+  <!-- 새로운 디테일 페이지-->
+  <div class="container">
+    <div class="row-mt-5">
+        <div class="col-12">
+            <!--본문-->
+            <div class="card" style="width: 100%;">
+                <!--제목,분류,작성일-->
+                <div class="card-header">
+                    <strong style="font-size: 18px;">{{ review.title }}</strong>
+                    {% comment %} &nbsp;&nbsp;<span style="font-size: 18px; color: gray;">[공지사항]</span> {% endcomment %}
+                    <div>
+                      <span style="float:right;">최초 작성: {{ review.created_at|date:'Y.m.d. H:i' }}</span><br>
+                      <span style="float:right;">수정: {{ review.updated_at|date:'Y.m.d. H:i' }}</span>
+                    </div>
+                </div>
+                <div class="card-body" style="min-height: 400px; color:black;">
+                    <!--작성자, 조회수-->
+                    <div>
+                        <span><i class="fas fa-user-edit"></i>&nbsp;작성자 : {{ review.user }}</span>
+                        <span style="float:right;">좋아요 수 : {{ review.like_users.all|length }}</span>
+                    </div>
+                    <hr>
+                    {% if notice.upload_files %}
+                    <div class="col-12 text-right">
+                        <span style="color: gray;">첨부파일 :&nbsp;</span>
+                        <a id="id_uploaded_file" href="{% url 'notice:notice_download' notice.id %}" >{{ notice.filename|truncatechars:25 }}</a>
+                    </div>
+                    {% endif %}
+                    <!--내용-->
+                    <div>
+                        {{ review.content | safe }}
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="text-right" style="margin-top:-15px;">
+                {% if request.user == review.user %}
+                <div class="d-flex row justify-content-end">
+                  <button class="btn btn-sm" id="detail_btn" onclick="location.href='{% url 'community:update' review.id %}'">수정</button>
+                  <form action="{% url 'community:delete' review.pk %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="삭제" id="delete_btn">
+                  </form>
+                  <!-- <button class="btn btn-md btn-dark" onclick="location.href='/notice/{{ notice.id }}/delete/'">삭제</button> -->
+                  <button class="btn btn-sm" id="detail_btn" onclick="location.href='{% url 'community:index' %}'">목록으로</button>
+                </div>
+                {% else %}
+                <button class="btn btn-sm" id="detail_btn" onclick="location.href='{% url 'community:index' %}'">목록으로</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <hr>
+  {% comment %} <h4>댓글 목록</h4>
+  {% if comments|length %}
+    <p><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
+  {% endif %}
+  {% for comment in comments %}
+    <div>
+      {{ comment.user }} - {{ comment.content }} | {{ comment.created_at }}
+      {% if request.user == comment.user %}
+        <form action="{% url 'community:comments_delete' review.pk comment.pk %}" method="POST" class="d-inline">
+          {% csrf_token %}
+          <input type="submit" value="DELETE">
+        </form>
+      {% endif %}
+    </div>
+  {% empty %}
+    <p><b>댓글이 없어요..</b></p>
+  {% endfor %}
+  <hr>
+  {% if request.user.is_authenticated %}
+    <form action="{% url 'community:create_comment' review.pk %}" method="POST">
+      {% csrf_token %}
+      {{ comment_form }}
+      <input type="submit">
+    </form>
+  {% else %}
+    <a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인하세요.]</a>
+  {% endif %} {% endcomment %}
+    <!--댓글-->
+    <div class="d-flex row justify-content-center">
+    <div class="card" style="width: 70%;">
+      <div class="card-header">
+          <div class="col-md-12">
+              {% csrf_token %}
+              <div class="form-group d-flex">
+                  {% comment %} <textarea class="form-control" id="content_id" rows="3" placeholder="댓글을 입력해주세요." style="margin-top:6px;"></textarea> {% endcomment %}
+                  {% if request.user.is_authenticated %}
+                    <form style="width: 100%;"action="{% url 'community:create_comment' review.pk %}" method="POST" name="comment-form">
+                      {% csrf_token %}
+                      {{ comment_form }}
+                      <div class="text-right" style="float:right">
+                        <br><input type="submit" value="댓글달기" class="btn btn-sm" style="background-color: #d14040f2; color: white; font-size: 15px; margin-top:-5px; margin-right:-12px;">
+                      </div>
+                    </form>
+                  {% else %}
+                    <a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인하세요.]</a>
+                  {% endif %}
+              </div>
+              {% comment %} <div class="text-right" style="float:right">
+                  <button id="comment_write" class="btn btn-sm" style="background-color: #d14040f2; color: white; font-size: 15px; margin-top:-5px; margin-right:-12px;">댓글달기</button>
+              </div> {% endcomment %}
+              {% if comments|length %}
+                <p><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
+              {% endif %}
+              {% for comment in comments %}
+                <div>
+                  <span class="font02">{{ comment.user }}</span><br>
+                  <span class="text-center">{{ comment.content }}</span><br>
+                  <div class="text-right">
+                    <span>{{ comment.created_at|date:'Y.m.d. H:i'}}</span><br>
+                    {% if request.user == comment.user %}
+                      <form action="{% url 'community:comments_delete' review.pk comment.pk %}" method="POST" class="d-inline">
+                        {% csrf_token %}
+                        <input type="submit" value="DELETE">
+                      </form>
+                  </div>
+                  <hr>
+                  {% endif %}
+                </div>
+              {% empty %}
+                <p><b>댓글이 없어요..</b></p>
+              {% endfor %}
+          </div>
+          <br>
+      </div>
+    </div>
+    </div>
+  </div>
+
+
+  <!-- 기존 디테일 페이지-->
+  {% comment %} <h2 class="text-center">DETAIL</h2>
   <h3>{{ review.pk }} 번째 글</h3>
   <hr>
   <p>제목: {{ review.title }}</p>
@@ -48,5 +181,39 @@
   {% else %}
     <a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인하세요.]</a>
   {% endif %}
-  <a href="{% url 'community:index' %}">[back]</a>
-{% endblock  %}
+  <a href="{% url 'community:index' %}">[back]</a> {% endcomment %}
+  {% endblock  %}
+
+{% block style %}
+  label {
+    position:absolute !important;  
+    width:1px; 
+    height:1px; 
+    overflow:hidden;
+    clip:rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip:rect(1px, 1px, 1px, 1px);
+  }
+  #id_content {
+    rows: 3;
+    margin-top: 6px;
+    width: 100%;
+  }
+  #delete_btn {
+    background-color: transparent !important;
+    background-image: none !important;
+    border-color: transparent;
+    border: none;
+    color: black;
+    font-size: 14px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+  }
+{% endblock %}
+
+{% block script %}
+  <script>
+    document.getElementById('id_content').placeholder = '댓글을 입력해주세요.';
+    document.getElementById('id_content').rows = 3;
+  
+  </script>
+{% endblock %}
