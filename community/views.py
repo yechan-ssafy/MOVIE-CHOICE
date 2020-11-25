@@ -133,7 +133,7 @@ def update(request, review_pk):
         return redirect('reviews:index')
     context = {
         'form': form,
-        'reivew': review,
+        'review': review,
     }
     return render(request, 'community/update.html', context)
 

@@ -29,7 +29,7 @@
                 {% for review in users %}
                 <tr class="text-center" style="cursor:pointer;" onclick="location.href='{% url 'community:detail' review.pk %}'">
                     <td style="font-weight: 500;">{{ review.pk }}</td>
-                    <td class="text-left" style="width:30%; font-weight: 600;"><a id="notice-{{ notice.id }}">{{ review.title|truncatechars:30 }}</a></td>
+                    <td class="text-center" style="width:30%; font-weight: 600;"><a id="notice-{{ notice.id }}">{{ review.title|truncatechars:30 }}</a></td>
                     <td style="width:20%; font-weight: 600;">{{ review.movie|truncatechars:20 }}</td>
                     {% comment %} <td style="font-weight: 500;">{{ review.movie }}</td> {% endcomment %}
                     <td style="font-weight: 500;"><a href="{% url 'accounts:profile' review.user.username %}">{{ review.user }}</a></td>
