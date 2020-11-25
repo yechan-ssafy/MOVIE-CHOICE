@@ -20,13 +20,13 @@
     .jb-box3 { width: 100%; overflow: hidden; margin: 0px; opacity: 0.7;}
     video { width: 100%; }
     .jb-text { position: absolute; top: 200px; width: 100%; }
-    .jb-text p { margin-top: -24px; text-align: center; font-size: 48px; font-family: 'Noto Sans KR', sans-serif;
+    .jb-text p { margin-top: -24px; text-align: center; font-size: 48px; font-family: 'Castoro', serif;
       font-weight: 700; color: #ffffff; }
     .jb-text2 { position: absolute; top: 800px; width: 100%; }
-    .jb-text2 p { margin-top: -24px; text-align: center; font-size: 48px; font-family: 'Noto Sans KR', sans-serif;
+    .jb-text2 p { margin-top: -24px; text-align: center; font-size: 48px; font-family: 'Castoro', serif;
       font-weight: 700;color: #f0415e; }
     .jb-text3 { position: absolute; top: 1500px; width: 100%; }
-    .jb-text3 p { margin-top: -24px; text-align: center; font-size: 48px; font-family: 'Noto Sans KR', sans-serif;
+    .jb-text3 p { margin-top: -24px; text-align: center; font-size: 48px; font-family: 'Castoro', serif;
       font-weight: 700; color: #ffffff; }
     .arrow {  width: 100%; height: 100px; margin-top: 24px; text-align: center;}
     h6 { text-align: center; }
@@ -71,7 +71,7 @@
       </div>
       {% if request.user.is_authenticated %}
         <div class='mr-4'>
-          <p class='d-flex justify-content-center mt-3'>Hello, <a href="{% url 'accounts:profile' user.username %}">{{ user.username }}</a></p>
+          <p class='d-flex justify-content-center mt-3'>Hello,&nbsp;<a style="color: black;" href="{% url 'accounts:profile' user.username %}">{{ user.username }}</a></p>
         </div>
       {% endif %}
     </div>
@@ -86,7 +86,7 @@
       <p>Travel.</p>
       <p>for your think</p>
       <h6 class="font02">우리는 1000편의 영화를 보유하고 있습니다.</h6>
-      <p><a href="{% url 'movies:index' %}" class="btn btn-primary center">Select Movie</a></p>
+      <p><a href="{% url 'movies:index' %}" class="btn btn-primary center mt-5">Select Movie</a></p>
     </div>
   </div>
   <div class="arrow">
@@ -103,7 +103,7 @@
       <p>Write.</p>
       <p>what you thought</p>
       <h6 class="font02">영화에 대한 당신의 생각을 적어주세요.</h6>
-      <p><a href="{% url 'community:index' %}" class="btn btn-primary center">Write Review</a></p>
+      <p><a href="{% url 'community:index' %}" class="btn btn-primary center mt-5">Write Review</a></p>
     </div>
   </div>
   <div class="arrow">
@@ -120,7 +120,7 @@
       <p>Move.</p>
       <p>as you think</p>
       <h6 class="font02 text-warning">당신의 생각을 다른 사람들과 공유해보세요.</h6>
-      <p><a href="{% url 'community:index' %}" class="btn btn-primary center">Share Review</a></p>
+      <p><a href="{% url 'community:index' %}" class="btn btn-primary center mt-5">Share Review</a></p>
     </div>
 
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

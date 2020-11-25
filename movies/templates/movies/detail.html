@@ -67,7 +67,7 @@
             <h4 class="font02">평점 + 한줄 영화평</h4>
               <div class="row ml-2">
                 {% if grades|length %}
-                  <p><b>{{ grades|length }}개의 평점이 있습니다.</b></p>
+                  <p><b> ㄴ{{ comments|length }}개의 평점이 있습니다.</b></p>
                 {% endif %}
                 <div class="row ml-5">
                   {% if request.user.is_authenticated %}
@@ -81,6 +81,7 @@
                   <a class="btn btn-sm ml-5" href="{% url 'community:index' %}">[리뷰 쓰러 가기]</a>
                 </div>
               </div>
+              <hr>
 
               {% for grade in grades %}
                 <div>
@@ -190,7 +191,7 @@
                   </div>
                   <br>
                   <span class="text-center font03"> {{ grade.content }}</span>
-                  <span class="text-center">- written by <a href="{% url 'accounts:profile' grade.user.username %}" style="color: black;"><b>{{ grade.user }}</b></a></span><br>
+                  <span class="text-center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- written by <a href="{% url 'accounts:profile' grade.user.username %}" style="color: black;"><b>{{ grade.user }}</b></a></span><br>
                   <div class="text-right">
                     {% if request.user == grade.user %}
                       <a class="btn btn-sm" href="{% url 'movies:grade_update' movie.id grade.pk %}">수정</a>

@@ -34,13 +34,15 @@
       <h2 class="font02">#장르별 추천</h2>
       <div class="row">
         {% for genre in genres %}
+          {% if genre.name != '다큐멘터리' %}
           <div class="col-sm-2" style="margin-right: 20;">
             <div class="card card_red text-center align-items-center justify-content-center">
               <div class="title">
-                <a href="{% url 'movies:genre_movie_list' genre.name %}"><h4 class="font02" style="margin-bottom: 0; color: black; font-size: 20px;">#{{ genre.name }}</h4></a>
+                  <a href="{% url 'movies:genre_movie_list' genre.name %}"><h4 class="font02" style="margin-bottom: 0; color: black; font-size: 20px;">#{{ genre.name }}</h4></a>
               </div>
             </div>
           </div>
+          {% endif %}
         {% endfor %}
       </div><br>
       <hr>

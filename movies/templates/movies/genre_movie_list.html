@@ -8,7 +8,7 @@
       {% for movie in movie_list %}
         <div class="col mb-3">
           <div class="card-content">
-            <a class="spectrum-a" href="{% url 'movies:detail' movie.pk %}"><img class="img-fluid" src="{{ movie.poster_path }}" alt="poster"></a>
+            <a class="spectrum-a" href="{% url 'movies:detail' movie.pk %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ movie.poster_path }}" alt="poster"></a>
           </div>
         </div>
       {% endfor %}
