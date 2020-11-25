@@ -26,8 +26,8 @@
   </style>
 </head>
 <body>
-  <div class="d-flex flex-column">
-    <div class='sticky-top ml-4 d-flex flex-row align-items-center justify-content-between' style="background-color:white; border-bottom: 1px solid rgba(var(--b6a,219,219,219),1);">
+  <div class="d-flex flex-column" style="background-color:lightyellow;">
+    <div class='sticky-top d-flex flex-row align-items-center justify-content-between' style="border-bottom: 1px solid rgba(var(--b6a,219,219,219),1);">
       <div class='d-flex flex-row align-items-center'>
         <a href="{% url 'index' %}"><img class='mt-1' src="https://upload-icon.s3.us-east-2.amazonaws.com/uploads/icons/png/3400650091557749680-512.png" style="width:30px;" alt=""></a>
         <h4 class='mt-2'>MOVIE CHOICE</h4>
@@ -54,6 +54,8 @@
       {% endif %}
     </div>
   </div>
+  
+  
   
   {% block content %}
   {% endblock %}
@@ -95,7 +97,19 @@
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 400;
   }
-  
+  .pattern {
+    background-color: #555;
+    background-image: linear-gradient(30deg, #444 12%, transparent 12.5%, transparent 87%, #444 87.5%, #444), linear-gradient(150deg, #444 12%, transparent 12.5%, transparent 87%, #444 87.5%, #444), linear-gradient(30deg, #444 12%, transparent 12.5%, transparent 87%, #444 87.5%, #444), linear-gradient(150deg, #444 12%, transparent 12.5%, transparent 87%, #444 87.5%, #444), linear-gradient(60deg, #888 25%, transparent 25.5%, transparent 75%, #888 75%, #888), linear-gradient(60deg, #888 25%, transparent 25.5%, transparent 75%, #888 75%, #888);
+    background-position: 0 0, 0 0, 25px 50px, 25px 50px, 0 0, 25px 50px;
+    background-size: 50px 100px;
+  }
+  .back {
+    background-color: lightyellow;
+    background-size : cover;
+  }
+  body {
+    background-color: lightyellow;
+  }
   {% block style %}
   {% endblock %}
 
