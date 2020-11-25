@@ -1,76 +1,114 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>영화 상세 정보</h1>
-  <span>{{ movie.title }}</span>
-  <br>
-  <img src="{{ movie.poster_path }}" alt="{{ movie.title }}">
-  <br>
-  <span>감독 : {{ movie.director }}</span>
-  <br>
-  <span>배우 : {{ movie.actor }}</span>
-  <br>
-  {% if movie.overview %}
-    <span>줄거리 : {{ movie.overview }}</span>
-  {% else %}
-    <span>줄거리가 없습니다.</span>
-  {% endif %}
-  <br>
-  <span>평점 : {{ movie.vote_average }}</span>
-  <br>
-  {% for movie_genre in movie.genres.all %}
-    <span>{{ movie_genre.name }}</span>
-  {% endfor %}
-  <br>
-  <form id="form_like" data-movieId="{{ movie.id }}" action="{% url 'movies:like' movie.id %}" method="POST" class="d-inline">
-    {% csrf_token %}
-    {% if user in movie.like_users.all %}
-      <button class="btn btn-link">
-        <i class="fas fa-heart fa-lg heart-{{ movie.id }}" style="color:crimson;"></i>
-      </button>
-    {% else %}
-      <button class="btn btn-link">
-        <i class="fas fa-heart fa-lg heart-{{ movie.id }}" style="color:black;"></i>
-      </button>
-    {% endif %}
-  </form>
+  {% comment %} <h1>영화 상세 정보</h1> {% endcomment %}
+  <div class="container">
+    <div class="d-flex column justify-content-center" style="height: 80%; overflow: auto;">
+      <div class="row justify-content-center" style="width: 40%;">
+        <img src="{{ movie.poster_path }}" alt="{{ movie.title }}" style="height: 100%; float:right;">
+      </div>
+      <div class="card col-md-6" style="width: 100%;">
+        <!--제목,분류,작성일-->
+        <div class="card-header">
+            <h3 class="font02" style="width: 100%;">{{ movie.title }}</h3>
+        </div>
+        <div class="card-body" style="min-height: 400px; color:black;">
+            <!--작성자, 조회수-->
+            <div>
+              <span class="font02" style="margin-rignt: 5px;">감독: <span>
+              <span class="font03" style="width: 100%;">{{ movie.director }}</span><br><br>
+              <span class="font02">배우: <span>
+              <span class="font03" style="width: 100%;">{{ movie.actor }}</span><br><br>
+              <span class="font02">장르: <span>
+              <div>
+                {% for movie_genre in movie.genres.all %}
+                  <span class="font03">{{ movie_genre.name }}, </span>
+                {% endfor %}
+              </div>
+            </div>
+            <br>
+            <!--내용-->
+            <div>
+              {% if movie.overview %}
+                <span class="font02">줄거리 : <span>
+                <p class="font03">{{ movie.overview|truncatechars:200 }}</p><br>
+              {% else %}
+                <span>줄거리가 없습니다.</span><br>
+              {% endif %}
+              <div class="d-flex row justify-content-around">
+                <h5 class="font03" >평점 : {{ movie.vote_average }}</h5>
+              </div>
+              <br>
+              <div class="d-flex row align-items-center justify-content-center" style="width: 100%;">
+                <form id="form_like" data-movieId="{{ movie.id }}" action="{% url 'movies:like' movie.id %}" method="POST" class="d-inline">
+                  {% csrf_token %}
+                  {% if user in movie.like_users.all %}
+                    <button class="btn btn-link">
+                      <i class="fas fa-heart fa-lg heart-{{ movie.id }}" style="color:crimson;"></i>
+                    </button>
+                  {% else %}
+                    <button class="btn btn-link">
+                      <i class="fas fa-heart fa-lg heart-{{ movie.id }}" style="color:black;"></i>
+                    </button>
+                  {% endif %}
+                </form>
+                <span class="font03" id='likeCount-{{ movie.id }}'>{{ movie.like_users.all|length }}명이 이 영화를 좋아합니다.</span>
+              </div>
 
-  <span id='likeCount-{{ movie.id }}'>{{ movie.like_users.all|length }}명이 이 영화를 좋아합니다.</span>
-  <br>
-  <a href="{% url 'community:index' %}">리뷰 쓰러 가기</a>
-  <br>
-  <h4>댓글 목록</h4>
-  {% if comments|length %}
-    <p><b>{{ comments|length }}개의 평점이 있습니다.</b></p>
-  {% endif %}
-  {% for comment in comments %}
-    <div>
-      {{ comment.user }}
-      <br>
-      {{ comment.rank }} - {{ comment.content }}
-      {% if request.user == comment.user %}
-        <a href="{% url 'movies:movie_comments_update' movie.id comment.pk %}">update</a>
-        <form action="{% url 'movies:movie_comments_delete' movie.id comment.pk %}" method="POST" class="d-inline">
-          {% csrf_token %}
-          <input type="submit" value="DELETE">
-        </form>
-      {% endif %}
+            </div>
+        </div>
+      </div>
     </div>
-  {% empty %}
-    <p><b>평점이 없습니다</b></p>
-  {% endfor %}
-  <hr>
-  {% if request.user.is_authenticated %}
-    <form action="{% url 'movies:movie_comment_create' movie.id %}" method="POST">
-      {% csrf_token %}
-      {{ comment_form.as_p }}
-      <input type="submit" value="평점 쓰기">
-    </form>
-  {% else %}
-    <a href="{% url 'accounts:login' %}">[평점을 작성하려면 로그인하세요.]</a>
-  {% endif %}
-  <br>
-  <a href="{% url 'movies:index' %}">[back]</a>
+    <br>    
+    <div class="d-flex row justify-content-center">
+      <div class="card" style="width: 90%;">
+        <div class="card-header">
+          <div class="col-md-12">
+            <h4 class="font02">평점 + 한줄 영화평</h4>
+              <div class="row ml-2">
+                {% if comments|length %}
+                  <p><b>{{ comments|length }}개의 평점이 있습니다.</b></p>
+                {% endif %}
+                <div class="row ml-5">
+                  {% if request.user.is_authenticated %}
+                    <form action="{% url 'movies:movie_comment_create' movie.id %}" method="POST">
+                      {% csrf_token %}
+                      {{ comment_form.as_p }}
+                      <input class="btn btn-sm ml-5" type="submit" value="[평점 쓰기]">
+                    </form>
+                  {% else %}
+                    <a href="{% url 'accounts:login' %}">[평점을 작성하려면 로그인하세요.]</a>
+                  {% endif %}
+                  <a class="btn btn-sm ml-5" href="{% url 'community:index' %}">[리뷰 쓰러 가기]</a>
+                </div>
+              </div>
+
+              {% for comment in comments %}
+                <div>
+                  <span class="font02">평점: {{ comment.rank }}</span><br>
+                  <span class="text-center font03"> {{ comment.content }}</span>
+                  <span class="text-center">- written by {{ comment.user }}</span><br>
+                  <div class="text-right">
+                    {% if request.user == comment.user %}
+                      <a class="btn btn-sm" href="{% url 'movies:movie_comments_update' movie.id comment.pk %}">수정</a>
+                      <form action="{% url 'movies:movie_comments_delete' movie.id comment.pk %}" method="POST" class="d-inline">
+                        {% csrf_token %}
+                        <input class="btn btn-sm" type="submit" value="삭제">
+                      </form>
+                    <hr>
+                    {% else %}
+                    <hr>
+                    {% endif %}
+                  </div>
+                </div>
+              {% empty %}
+                <p><b>영화평이 없어요..</b></p>
+              {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock  %}
 
 {% block script %}
@@ -91,7 +129,7 @@
             const likeHeart = document.querySelector(`.heart-${movieId}`)
             likeHeart.style.color = is_like ? 'crimson' : 'black'
             const countHeart = document.querySelector(`#likeCount-${movieId}`)
-            countHeart.innerText = `${like_count}명이 이글을 좋아합니다.`
+            countHeart.innerText = `${like_count}명이 이 영화를 좋아합니다.`
           })
           .catch(err => {
             console.error(err)
@@ -100,4 +138,10 @@
       })
     })
   </script>
+{% endblock %}
+
+{% block style %}
+  p {
+    margin-bottom: 2px;
+  }
 {% endblock %}
