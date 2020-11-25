@@ -21,16 +21,16 @@
           <div class="input-field col s12">
             <h5 class="font03">- 한 줄평 :&nbsp; {{ grade_form.content }}</h5>         
           </div>
-        </form>                
-      </div>
-      <div class="card-footer" style="padding-left: 0px; margin-top:18px;">
-        <div class="form-group">
-          <div class="col-sm-12">
-              <p>* 한 줄평은 최대 20자까지만 작성 가능합니다. 그 이상은 리뷰 쓰기를 이용해주세요.</p>
-              <button style="float: right;" class="btn bt-block btn-success" type="submit" name="action">평점 주기</button>
-              <a href="{% url 'movies:detail' movie.id %}">뒤로 가기</a>
+          <div class="card-footer" style="padding-left: 0px; margin-top:18px;">
+            <div class="form-group">
+              <div class="col-sm-12">
+                  <p>* 한 줄평은 최대 50자까지만 작성 가능합니다. 그 이상은 리뷰 쓰기를 이용해주세요.</p>
+                  <button style="float: right;" class="btn bt-block btn-success" type="submit" name="action">평점 주기</button>
+                  <a href="{% url 'movies:detail' movie.id %}">뒤로 가기</a>
+              </div>
+            </div>
           </div>
-        </div>
+        </form>                
       </div>
     </div>
   </div>
