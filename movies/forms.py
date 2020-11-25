@@ -1,10 +1,9 @@
 from django import forms
-from .models import MovieComment
+from .models import Grade, RATE_CHOICE
 
-
-class MovieCommentForm(forms.ModelForm):
+class GradeForm(forms.ModelForm):
+    rate = forms.ChoiceField(choices=RATE_CHOICE, widget=forms.Select(), required=True)
 
     class Meta:
-        model = MovieComment
-        fields = ['rank', 'content']
-        # exclude = ['movie', 'user']
+        model = Grade
+        fields = ('content', 'rate')

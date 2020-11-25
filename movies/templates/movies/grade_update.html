@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="text-center">CREATE</h1>
+  <form action="" method="POST">
+    {% csrf_token %}
+    <div class="input-field col s12">
+      내 평점 : {{ grade_form.rate }}
+    </div>
+    <div class="input-field col s12">
+      한줄 평 : {{ grade_form.content }}           
+    </div>
+    <button type="submit" name="action">평점 수정</button>
+  </form>
+  <hr>
+  <a href="{% url 'movies:detail' movie.id %}">[back]</a>
+{% endblock %}

@@ -23,9 +23,25 @@ class Movie(models.Model):
         return self.title
 
 
-class MovieComment(models.Model):
-    content = models.CharField(max_length=200)
-    rank = models.IntegerField()
+RATE_CHOICE = [
+    (1, '1 - Trash'),
+    (2, '2 - Horrible'),
+    (3, '3 - Terrible'),
+    (4, '4 - Bad'),
+    (5, '5 - OK'),
+    (6, '6 - Watchable'),
+    (7, '7 - Good'),
+    (8, '8 - Very Good'),
+    (9, '9 - Perfect'),
+    (10, '10 - Master Piece'),
+]
+
+
+class Grade(models.Model):
+    rate = models.PositiveSmallIntegerField(choices=RATE_CHOICE)
+    content = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
