@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="d-flex column justify-content-around align-items-center">
-    <h1 class="text-center font01 ml-10">검색 결과</h1>
+  <h1 class="text-center font01 mt-5">Search Movies</h1>
+  <div class="mt-5 d-flex column justify-content-end mr-5 align-items-center">
     <form action="" method="GET">
       <div class="col">
         <div style="float: right;" class="form-row">
@@ -29,8 +29,8 @@
       </div>
     </form>
   </div>
-  <div class="container">
-  <hr>
+  <br>
+  <div class="container mt-5">
     <div class="row row-cols-1 row-cols-md-6">
       {% for  movie in search_movie_list %}
         <div class="col mb-3">
