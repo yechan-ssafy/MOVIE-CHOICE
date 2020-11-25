@@ -203,10 +203,17 @@ def weather_api_url(request):
 def detail(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     grades =  movie.grade_set.all()
+    
+    genre_list = []
+    for genre in movie.genres.all():
+        genre_list.append(genre)
+    last_genre = genre_list[-1]
+    
     grade_form = GradeForm()
     context = {
         'movie': movie,
         'grades': grades,
+        'last_genre': last_genre,
         'grade_form': grade_form,
     }
     return render(request, 'movies/detail.html', context)
