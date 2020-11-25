@@ -43,7 +43,7 @@ def index(request):
 
     ### pagination
     total_len = len(reviews)
-    paginator = Paginator(reviews, 3)
+    paginator = Paginator(reviews, 10)
     page = request.GET.get('page', 1)
     
     try:
