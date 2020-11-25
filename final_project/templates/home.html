@@ -125,6 +125,17 @@
       <h6 class="font02 text-warning">당신의 생각을 다른 사람들과 공유해보세요.</h6>
       <p><a href="{% url 'community:index' %}" class="btn btn-primary center mt-5">Share Review</a></p>
     </div>
+  
+  <footer>
+    <h2 class="font03">MOVIE CHOICE</h2>
+    <p class="font03 bottom">SSAFY Final Project</p>
+    <p class="font03 bottom">Author: 이세빈 & 김예찬</p>
+    <p class="font03 bottom">궁금한 사항은 이메일로 보내주세요!</p>
+    <div class="row justify-content-center">
+      <p class="font03 mr-2">이세빈 : <a href="mailto:clubin30@gmail.com">clubin30@gmail.com</a></p>
+      <p class="font03">김예찬 : <a href="mailto:fcduck16@gmail.com">fcduck16@gmail.com</a></p>
+    </div>
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -140,8 +151,20 @@
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 700;
   }
+  .font03 {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 400;
+  }
   div a, a:hover {
     text-decoration: none;
+  }
+  footer {
+  text-align: center;
+  background-color: black;
+  color: white;
+  }
+  .bottom {
+    margin-bottom: 0.3rem;
   }
 </style>
 </html>
