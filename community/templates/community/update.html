@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  {% comment %} <h1 class="text-center">CREATE</h1> {% endcomment %}
 
-  <div class="container">
+<div class="container">
     <div class="row mt-5">
         <div class="col-12">
-            <h4 style="font-weight: bold;">수정하기</h4>
+            <h4 style="font-weight: bold;">리뷰 수정하기</h4>
         </div>
     </div>
-
+    <br>
     <div class="row-mt-5">
         <!--본문-->
         <form action="" method="POST" enctype="multipart/form-data">
@@ -34,50 +35,34 @@
                     </div>
                 </div>
                 <div>
-                    {% comment %} <!--내용-->
-                    {{ form.content }} {% endcomment %}
                 </div>
             </div>
-            
-            <div class="card-footer" style="padding-left: 0px; margin-top:18px;">
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        {% comment %} {{ form.upload_files }}
-                        <small id="help" class="form-text text-muted" style="margin-bottom: -15px;">
-                            &nbsp;&nbsp;[파일 업로드]&nbsp;&nbsp;<i class="fas fa-upload"></i>&nbsp;10MB 이하의 파일만 첨부 가능합니다. 여러 파일은 압축해서 업로드해주세요.
-                        </small> {% endcomment %}
-                    </div>
-                </div>
-            </div>
-            <div class="text-right" style="margin-top: 10px;">
-                {% comment %} <label>
-                    {{ form.top_fixed }}
-                    <span style="padding-bottom: 35px; color:black; font-weight: bold;">상단에 표시하기</span>
-                </label> {% endcomment %}
+            <br>
+            <div class="row align-items-center justify-content-between">
+              <a class="font02 mt-2 ml-3" href="{% url 'community:detail' review.pk %}">뒤로가기</a>
+              <div class="text-right mr-4" style="margin-top: 10px;">
                 {% if edit %}
                 <button type="submit" id="write" class="btn btn-sm">{{ edit }}</button>
                 {% else %}
-                {% comment %} <button type="submit" id="write" class="btn btn-sm">수정완료</button> {% endcomment %}
                 <input type="submit" id="write" value="수정완료" class="btn btn-sm" style="background-color: #6495ED; color: white; margin-top:-5px; margin-right:-12px;">
                 {% endif %}
                 <input type="checkbox" id="fileChangeCheck" name="fileChange" style="display: none;">
             </div>
+            </div>
         </form>
-        <a href="{% url 'community:detail' review.pk %}">뒤로가기</a>
     </div>
 </div>
 
 
-  {% comment %} <h1 class="text-center">UPDATE</h1>
-  <form action="" method="POST">
+  <!-- 기존 게시글 -->
+  {% comment %} <form action="" method="POST">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit">
   </form>
-  <hr> {% endcomment %}
-  {% comment %} <a href="{% url 'community:index' %}">[back]</a> {% endcomment %}
+  <hr>
+  <a href="{% url 'community:index' %}">[back]</a> {% endcomment %}
 {% endblock %}
-
 
 {% block style %}
   #id_title {

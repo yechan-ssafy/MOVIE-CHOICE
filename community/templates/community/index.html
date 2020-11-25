@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1 class="text-center font01">Community</h1>
+  <h1 class="text-center font01 mt-5">Community</h1>
 
   <!-- 새로운 커뮤니티 게시판-->
   <div class="container">
-    <hr>
+    <br>
     {% if not user.is_authenticated %}
       <a href="{% url 'accounts:login' %}">[새 글을 작성하려면 로그인하세요]</a>
     {% else %}
@@ -19,7 +19,6 @@
                     <th style="font-weight: bold; font-size: 16px;">영화 제목</th>
                     <th style="font-weight: bold; font-size: 16px;">작성자</th>
                     <th style="font-weight: bold; font-size: 16px;">등록일</th>
-                    <th style="font-weight: bold; font-size: 16px;">수정일</th>
                     <th style="font-weight: bold; font-size: 16px;">좋아요 수</th>
                 </tr>
 
@@ -31,10 +30,8 @@
                     <td style="font-weight: 500;">{{ review.pk }}</td>
                     <td class="text-center" style="width:30%; font-weight: 600;"><a id="notice-{{ notice.id }}">{{ review.title|truncatechars:30 }}</a></td>
                     <td style="width:20%; font-weight: 600;">{{ review.movie|truncatechars:20 }}</td>
-                    {% comment %} <td style="font-weight: 500;">{{ review.movie }}</td> {% endcomment %}
                     <td style="font-weight: 500;"><a href="{% url 'accounts:profile' review.user.username %}">{{ review.user }}</a></td>
                     <td style="font-weight: 500;">{{ review.created_at|date:'Y. m. d' }}</td>
-                    <td style="font-weight: 500;">{{ review.updated_at|date:'Y. m. d' }}</td>
                     <td style="font-weight: 500;">{{ review.like_users.all|length }}</td>
                 </tr>
                 {% endfor %}
@@ -52,6 +49,7 @@
                       <option value="title_content">제목+내용</option>
                       <option value="title">제목</option>
                       <option value="content">내용</option>
+                      <option value="movie">영화 제목</option>
                       <option value="writer">작성자</option>
                   </select>
               </div>

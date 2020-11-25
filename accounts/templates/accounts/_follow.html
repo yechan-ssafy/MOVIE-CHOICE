@@ -2,11 +2,11 @@
 
 <div class="jumbotron text-center text-white bg-dark">
   <div class="d-flex column align-items-center">
+    <img class="ml-3" src="{% static 'icons/boy.png' %}">
     <div class="column align-items-center">
-      <p class="ml-5 lead font03">작성자 정보</p><br>
-      <h4 class="ml-3">{{ person.username }}</h1>
+      {% comment %} <p class="ml-5 lead font03">작성자 정보</p><br> {% endcomment %}
+      <h4 class="ml-3">{{ person.username }}님의 활동</h1>
     </div>
-    <img class="ml-5" src="{% static 'icons/boy.png' %}">
     <hr>
     <div class="column justify-content-center mr-5">
       {% with followings=person.followings.all followers=person.followers.all %}

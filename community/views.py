@@ -21,15 +21,17 @@ def index(request):
     notice_list = Review.objects.order_by('-id') 
     
     if search_keyword :
-        if len(search_keyword) >= 1 :
+        if len(search_keyword) >= 2 :
             if search_type == 'all':
-                search_notice_list = notice_list.filter(Q (title__icontains=search_keyword) | Q (content__icontains=search_keyword) | Q (user__username__icontains=search_keyword))
+                search_notice_list = notice_list.filter(Q (title__icontains=search_keyword) | Q (content__icontains=search_keyword) | Q (user__username__icontains=search_keyword) | Q (movie__icontains=search_keyword))
             elif search_type == 'title_content':
                 search_notice_list = notice_list.filter(Q (title__icontains=search_keyword) | Q (content__icontains=search_keyword))
             elif search_type == 'title':
                 search_notice_list = notice_list.filter(title__icontains=search_keyword)    
             elif search_type == 'content':
                 search_notice_list = notice_list.filter(content__icontains=search_keyword)    
+            elif search_type == 'movie':
+                search_notice_list = notice_list.filter(movie__icontains=search_keyword)    
             elif search_type == 'writer':
                 search_notice_list = notice_list.filter(user__username__icontains=search_keyword)
             # else:
