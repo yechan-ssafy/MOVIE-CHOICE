@@ -3,11 +3,11 @@
 {% block content %}
   {% comment %} <h1>영화 상세 정보</h1> {% endcomment %}
   <div class="container">
-    <div class="d-flex column justify-content-center" style="height: 80%; overflow: auto;">
-      <div class="row justify-content-center" style="width: 40%;">
+    <div class="d-flex column justify-content-between" style="height: 70%; overflow: auto;">
+      <div class="card row justify-content-center" style="width: 700px; height: auto; object-fit: cover;">
         <img src="{{ movie.poster_path }}" alt="{{ movie.title }}" style="height: 100%; float:right;">
       </div>
-      <div class="card col-md-6" style="width: 100%;">
+      <div class="card" style="width: 100%;">
         <!--제목,분류,작성일-->
         <div class="card-header">
             <h3 class="font02" style="width: 100%;">{{ movie.title }}</h3>
@@ -61,8 +61,8 @@
     </div>
     <br>    
     <div class="d-flex row justify-content-center">
-      <div class="card" style="width: 90%;">
-        <div class="card-header">
+      <div class="card" style="width: 97%;">
+        <div class="card-body">
           <div class="col-md-12">
             <h4 class="font02">평점 + 한줄 영화평</h4>
               <div class="row ml-2">
