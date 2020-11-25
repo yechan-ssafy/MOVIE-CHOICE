@@ -8,7 +8,7 @@
 
     <div class="container mb-3">
       <div class="d-flex row justify-content-end">
-        <h5 class="font03">영화 검색<a href="{% url 'movies:search' %}"><img src="{% static 'icons/search.png' %}" alt="search"></a></h5>
+        <p class="font03">영화 검색<a href="{% url 'movies:search' %}"><img class="ml-3" src="{% static 'icons/search.png' %}" alt="search"></a></p>
       </div>
       <br>
       <!-- 날씨 상태에 따라 영화 추천 -->
@@ -22,7 +22,7 @@
           {% for weather_movie in weather_movies %}
             <div class="col mb-3">
               <div class="card-content">
-                <a class="spectrum-a" href="{% url 'movies:detail' weather_movie.id %}"><img class="img-fluid" src="{{ weather_movie.poster_path }}" alt="{{ weather_movie.title }}"></a>
+                <a class="spectrum-a" href="{% url 'movies:detail' weather_movie.id %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ weather_movie.poster_path }}" alt="{{ weather_movie.title }}"></a>
               </div>
             </div>
           {% endfor %}
@@ -34,10 +34,10 @@
       <h2 class="font02">#장르별 추천</h2>
       <div class="row">
         {% for genre in genres %}
-          <div class="col-sm-1">
-            <div class="card card_three text-center">
+          <div class="col-sm-2" style="margin-right: 20;">
+            <div class="card card_red text-center align-items-center justify-content-center">
               <div class="title">
-                <a href="{% url 'movies:genre_movie_list' genre.name %}"><h4>#{{ genre.name }}</h4></a>
+                <a href="{% url 'movies:genre_movie_list' genre.name %}"><h4 class="font02" style="margin-bottom: 0; color: black; font-size: 20px;">#{{ genre.name }}</h4></a>
               </div>
             </div>
           </div>
@@ -51,7 +51,7 @@
           {% for like_movie in like_movies %}
             <div class="col mb-3">
               <div class="card-content">
-                <a class="spectrum-a" href="{% url 'movies:detail' like_movie.id %}"><img class="img-fluid" src="{{ like_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
+                <a class="spectrum-a" href="{% url 'movies:detail' like_movie.id %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ like_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
               </div>
             </div>
           {% endfor %}
@@ -65,7 +65,7 @@
           {% for like_movie_director_movie in like_movie_director_movie_list %}
             <div class="col mb-3">
               <div class="card-content">
-                <a class="spectrum-a" href="{% url 'movies:detail' like_movie_director_movie.id %}"><img class="img-fluid" src="{{ like_movie_director_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
+                <a class="spectrum-a" href="{% url 'movies:detail' like_movie_director_movie.id %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ like_movie_director_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
               </div>
             </div>
           {% endfor %}
@@ -79,7 +79,7 @@
         {% for like_movie_genre_movie in like_movie_genre_movie_list %}
           <div class="col mb-3">
             <div class="card-content">
-              <a class="spectrum-a" href="{% url 'movies:detail' like_movie_genre_movie.id %}"><img class="img-fluid" src="{{ like_movie_genre_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
+              <a class="spectrum-a" href="{% url 'movies:detail' like_movie_genre_movie.id %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ like_movie_genre_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
             </div>
           </div>
         {% endfor %}
@@ -133,13 +133,14 @@
     margin: 5px 5px;
     padding: 5px 0px;
     box-shadow: 0 2px 3px rgba(0,0,0,0.3);
-    transition: .5s;
+    transition: .1s;
   }
   .card:hover {
     transform:scale(1.1);
   }
   .card_red, .card_red .title .fa {
     background: linear-gradient(-45deg, #ffec61, #f321d7);
+    opacity: 0.8;
   }
   .card_violet, .card_violet .title .fa  {
     background: linear-gradient(-45deg, #f403d1, #64b5f6);
