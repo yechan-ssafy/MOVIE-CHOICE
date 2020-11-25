@@ -57,12 +57,13 @@
                 {% if edit %}
                 <button type="submit" id="write" class="btn btn-sm">{{ edit }}</button>
                 {% else %}
-                <button type="submit" id="write" class="btn btn-sm">수정완료</button>
+                {% comment %} <button type="submit" id="write" class="btn btn-sm">수정완료</button> {% endcomment %}
+                <input type="submit" id="write" value="수정완료" class="btn btn-sm" style="background-color: #6495ED; color: white; margin-top:-5px; margin-right:-12px;">
                 {% endif %}
                 <input type="checkbox" id="fileChangeCheck" name="fileChange" style="display: none;">
             </div>
         </form>
-        <a href="{% url 'community:index' %}">뒤로가기</a>
+        <a href="{% url 'community:detail' review.pk %}">뒤로가기</a>
     </div>
 </div>
 
