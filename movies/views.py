@@ -40,7 +40,7 @@ def index(request):
             if like_movie_genre_movie not in like_movie_genre_movie_list:
                 like_movie_genre_movie_list.append(like_movie_genre_movie)
             cnt += 1
-            if cnt == 10:
+            if cnt == 5:
                 break
 
     weather = Weather.objects.all()[0]

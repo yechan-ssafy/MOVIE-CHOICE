@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Castoro:ital@1&display=swap" rel="stylesheet"> 
 
-  <title>Document</title>
+  <title>MOVIE CHOICE</title>
   <style>
     
     /*1121*/
@@ -73,8 +73,8 @@
         </div> {% endcomment %}
       </div>
       {% if request.user.is_authenticated %}
-        <div class='mr-4'>
-          <p class='d-flex justify-content-center mt-3'>Hello, <a href="{% url 'accounts:profile' user.username %}">{{ user.username }}</a></p>
+        <div class='mr-4 row align-items-center'>
+          <p class='d-flex justify-content-center mt-3 font02'>Hello,&nbsp;<a style="color: black;" href="{% url 'accounts:profile' user.username %}">{{ user.username }}</a></p>
         </div>
       {% endif %}
     </div>
@@ -88,7 +88,7 @@
     <div class="jb-text">
       <p>Travel.</p>
       <p>for your think</p>
-      <h6 class="font02">우리는 1000편의 영화를 보유하고 있습니다.</h6>
+      <h6 class="font02">우리는 약 1000편의 영화를 보유하고 있습니다.</h6>
       <p><a href="{% url 'movies:index' %}" class="btn btn-primary center mt-5">Select Movie</a></p>
     </div>
   </div>
@@ -105,8 +105,8 @@
     <div class="jb-text2">
       <p>Write.</p>
       <p>what you thought</p>
-      <h6 class="font02">영화에 대한 당신의 생각을 적어주세요.</h6>
-      <p><a href="{% url 'community:index' %}" class="btn btn-primary center mt-5">Write Review</a></p>
+      <h6 class="font02">당신이 보고싶은 영화를 검색해 보세요.</h6>
+      <p><a href="{% url 'movies:search' %}" class="btn btn-primary center mt-5">Search Movie</a></p>
     </div>
   </div>
   <div class="arrow">
@@ -134,6 +134,13 @@
 </body>
 <style>
   .banner:hover {
+    text-decoration: none;
+  }
+  .font02 {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+  }
+  div a, a:hover {
     text-decoration: none;
   }
 </style>
