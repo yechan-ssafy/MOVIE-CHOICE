@@ -22,7 +22,11 @@
               <span class="font02">장르: <span>
               <div>
                 {% for movie_genre in movie.genres.all %}
-                  <span class="font03">{{ movie_genre.name }}, </span>
+                  {% if movie_genre == last_genre %}
+                    <span class="font03">{{ movie_genre.name }} </span>
+                  {% else %}
+                    <span class="font03">{{ movie_genre.name }}, </span>
+                  {% endif %}
                 {% endfor %}
               </div>
             </div>
