@@ -2,89 +2,91 @@
 {% load static %}
 
 {% block content %}
-  <h1 class="font01 d-flex justify-content-center">Movies</h1>
-  <hr>
-  <div class="mr-5 d-flex row justify-content-end">
-    <h5 class="font03">영화 검색<a href="{% url 'movies:search' %}"><img src="{% static 'icons/search.png' %}" alt="search"></a></h5>
-  </div>
-  <br>
+  
+    <h1 class="font01 d-flex justify-content-center">Movies</h1>
+    <hr>
 
-  <div class="container mb-3">
-    <!-- 날씨 상태에 따라 영화 추천 -->
-    <h2 class="font02">#날씨별 영화 추천</h2>
-    <a href="{% url 'movies:weather_api_url' %}">날씨 정보 갱신하기</a>
-    <div>
-      <img src="{{ weather.name }}">
-      <span class="font03">{{ weather_text }}</span>
-      <br>
-      <div class="row row-cols-1 row-cols-md-6">
-        {% for weather_movie in weather_movies %}
-          <div class="col mb-3">
-            <div class="card-content">
-              <a class="spectrum-a" href="{% url 'movies:detail' weather_movie.id %}"><img class="img-fluid" src="{{ weather_movie.poster_path }}" alt="{{ weather_movie.title }}"></a>
-            </div>
-          </div>
-        {% endfor %}
+    <div class="container mb-3">
+      <div class="d-flex row justify-content-end">
+        <h5 class="font03">영화 검색<a href="{% url 'movies:search' %}"><img src="{% static 'icons/search.png' %}" alt="search"></a></h5>
       </div>
-    </div>
-    <br>
-    <hr>
-
-    <h2 class="font02">#장르별 추천</h2>
-    <div class="row">
-      {% for genre in genres %}
-        <div class="col-sm-1">
-          <div class="card card_three text-center">
-            <div class="title">
-              <a href="{% url 'movies:genre_movie_list' genre.name %}"><h4>#{{ genre.name }}</h4></a>
+      <br>
+      <!-- 날씨 상태에 따라 영화 추천 -->
+      <h2 class="font02">#날씨별 영화 추천</h2>
+      <a href="{% url 'movies:weather_api_url' %}">날씨 정보 갱신하기</a>
+      <div>
+        <img src="{{ weather.name }}">
+        <span class="font03">{{ weather_text }}</span>
+        <br>
+        <div class="row row-cols-1 row-cols-md-6">
+          {% for weather_movie in weather_movies %}
+            <div class="col mb-3">
+              <div class="card-content">
+                <a class="spectrum-a" href="{% url 'movies:detail' weather_movie.id %}"><img class="img-fluid" src="{{ weather_movie.poster_path }}" alt="{{ weather_movie.title }}"></a>
+              </div>
             </div>
-          </div>
+          {% endfor %}
         </div>
-      {% endfor %}
-    </div><br>
-    <hr>
+      </div>
+      <br>
+      <hr>
 
-  <!-- 좋아요 누른 영화 목록 -->
-    <h2 class="font02">#내가 좋아하는 영화</h2>
-      <div class="row row-cols-1 row-cols-md-6">
-        {% for like_movie in like_movies %}
-          <div class="col mb-3">
-            <div class="card-content">
-              <a class="spectrum-a" href="{% url 'movies:detail' like_movie.id %}"><img class="img-fluid" src="{{ like_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
+      <h2 class="font02">#장르별 추천</h2>
+      <div class="row">
+        {% for genre in genres %}
+          <div class="col-sm-1">
+            <div class="card card_three text-center">
+              <div class="title">
+                <a href="{% url 'movies:genre_movie_list' genre.name %}"><h4>#{{ genre.name }}</h4></a>
+              </div>
             </div>
           </div>
         {% endfor %}
+      </div><br>
+      <hr>
+
+    <!-- 좋아요 누른 영화 목록 -->
+      <h2 class="font02">#내가 좋아하는 영화</h2>
+        <div class="row row-cols-1 row-cols-md-6">
+          {% for like_movie in like_movies %}
+            <div class="col mb-3">
+              <div class="card-content">
+                <a class="spectrum-a" href="{% url 'movies:detail' like_movie.id %}"><img class="img-fluid" src="{{ like_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <hr>
+
+    <!-- 좋아요한 영화의 감독의 다른 영화 추천 -->
+      <h2 class="font02">#내가 좋아하는 감독의 영화</h2>
+      <hr>
+      <div class="row row-cols-1 row-cols-md-6">
+          {% for like_movie_director_movie in like_movie_director_movie_list %}
+            <div class="col mb-3">
+              <div class="card-content">
+                <a class="spectrum-a" href="{% url 'movies:detail' like_movie_director_movie.id %}"><img class="img-fluid" src="{{ like_movie_director_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
+              </div>
+            </div>
+          {% endfor %}
       </div>
       <hr>
 
-  <!-- 좋아요한 영화의 감독의 다른 영화 추천 -->
-    <h2 class="font02">#내가 좋아하는 감독의 영화</h2>
-    <hr>
-    <div class="row row-cols-1 row-cols-md-6">
-        {% for like_movie_director_movie in like_movie_director_movie_list %}
+    <!-- 좋아요한 영화와 같은 장르의 영화 평점 높은 순으로 정렬 -->
+      <h2 class="font02">#취향저격!</h2>
+      <hr>
+      <div class="row row-cols-1 row-cols-md-6">
+        {% for like_movie_genre_movie in like_movie_genre_movie_list %}
           <div class="col mb-3">
             <div class="card-content">
-              <a class="spectrum-a" href="{% url 'movies:detail' like_movie_director_movie.id %}"><img class="img-fluid" src="{{ like_movie_director_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
+              <a class="spectrum-a" href="{% url 'movies:detail' like_movie_genre_movie.id %}"><img class="img-fluid" src="{{ like_movie_genre_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
             </div>
           </div>
         {% endfor %}
+      </div>
     </div>
-    <hr>
-
-  <!-- 좋아요한 영화와 같은 장르의 영화 평점 높은 순으로 정렬 -->
-    <h2 class="font02">#취향저격!</h2>
-    <hr>
-    <div class="row row-cols-1 row-cols-md-6">
-      {% for like_movie_genre_movie in like_movie_genre_movie_list %}
-        <div class="col mb-3">
-          <div class="card-content">
-            <a class="spectrum-a" href="{% url 'movies:detail' like_movie_genre_movie.id %}"><img class="img-fluid" src="{{ like_movie_genre_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  </div>
-  <br> 
+    <br> 
+  
 {% endblock %}
 
 {% block script %}
@@ -103,6 +105,7 @@
 {% endblock %}
 
 {% block style %}
+  
   .wrap {
      width: 100%;
      height: 100%;
