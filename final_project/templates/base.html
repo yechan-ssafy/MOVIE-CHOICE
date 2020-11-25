@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +11,9 @@
   <!--Google font-->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+  <!-- home font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Castoro:ital@1&display=swap" rel="stylesheet">
 
   <title>Document</title>
   <style>
@@ -48,8 +53,8 @@
         </div>
       </div>
       {% if request.user.is_authenticated %}
-        <div class='mr-4'>
-          <p class='d-flex justify-content-center mt-3'>Hello, <a href="{% url 'accounts:profile' user.username %}">{{ user.username }}</a></p>
+        <div class='mr-4 row align-items-center'>
+          <p class='d-flex justify-content-center mt-3'>Hello,&nbsp;<a style="color: black;" href="{% url 'accounts:profile' user.username %}">{{ user.username }}</a></p>
         </div>
       {% endif %}
     </div>
