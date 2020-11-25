@@ -67,7 +67,7 @@
             <h4 class="font02">평점 + 한줄 영화평</h4>
               <div class="row ml-2">
                 {% if grades|length %}
-                  <p><b> ㄴ{{ comments|length }}개의 평점이 있습니다.</b></p>
+                  <p><b> ㄴ{{ grades|length }}개의 평점이 있습니다.</b></p>
                 {% endif %}
                 <div class="row ml-5">
                   {% if request.user.is_authenticated %}
