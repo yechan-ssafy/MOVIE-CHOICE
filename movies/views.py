@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .models import Movie, Genre, MovieComment, Weather
-from .forms import MovieCommentForm
+from .models import Movie, Genre, Grade, Weather
+from .forms import GradeForm
 
 import requests
 import json
@@ -195,12 +195,12 @@ def weather_api_url(request):
 @require_GET
 def detail(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
-    comments =  movie.moviecomment_set.all()
-    comment_form = MovieCommentForm()
+    grades =  movie.grade_set.all()
+    grade_form = GradeForm()
     context = {
         'movie': movie,
-        'comments': comments,
-        'commnet_form': comment_form,
+        'grades': grades,
+        'grade_form': grade_form,
     }
     return render(request, 'movies/detail.html', context)
 
@@ -226,50 +226,50 @@ def like(request, movie_id):
 
 
 @require_POST
-def movie_comment_create(request, movie_id):
+def grade_create(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
-    comment_form = MovieCommentForm(request.POST)
-    if comment_form.is_valid():
-        comment = comment_form.save(commit=False)
-        comment.movie = movie
-        comment.user = request.user
-        comment.save()
+    grade_form = GradeForm(request.POST)
+    if grade_form.is_valid():
+        grade = grade_form.save(commit=False)
+        grade.movie = movie
+        grade.user = request.user
+        grade.save()
         return redirect('movies:detail', movie.id)
     context = {
-        'comment_form': comment_form,
+        'grade_form': grade_form,
         'movie': movie,
     }
-    return render(request, 'movies/comment_create.html', context)
+    return render(request, 'movies/grade_create.html', context)
 
 
 @login_required
 @require_http_methods(['GET', 'POST'])
-def movie_comments_update(request, movie_id, comment_pk):
+def grade_update(request, movie_id, grade_pk):
     movie = get_object_or_404(Movie, id=movie_id)
-    movie_comment = get_object_or_404(MovieComment, pk=comment_pk)
-    if request.user == movie_comment.user:
+    grade = get_object_or_404(Grade, pk=grade_pk)
+    if request.user == grade.user:
         if request.method == 'POST':
-            comment_form = MovieCommentForm(request.POST, instance=movie_comment)
-            if comment_form.is_valid():
-                comment_form.save()
+            grade_form = GradeForm(request.POST, instance=grade)
+            if grade_form.is_valid():
+                grade_form.save()
                 return redirect('movies:detail', movie.id)
         else:
-            comment_form = MovieCommentForm(instance=movie_comment)
+            grade_form = GradeForm(instance=grade)
     else:
         return redirect('movies:index')
     context = {
-        'comment_form': comment_form,
+        'grade_form': grade_form,
         'movie': movie,
     }
-    return render(request, 'movies/comment_update.html', context)
+    return render(request, 'movies/grade_update.html', context)
 
 
 @require_POST
-def movie_comments_delete(request, movie_id, comment_pk):
+def grade_delete(request, movie_id, grade_pk):
     if request.user.is_authenticated:
-        comment = get_object_or_404(MovieComment, pk=comment_pk)
-        if request.user == comment.user:
-            comment.delete()
+        grade = get_object_or_404(Grade, pk=grade_pk)
+        if request.user == grade.user:
+            grade.delete()
     return redirect('movies:detail', movie_id)
 
 
