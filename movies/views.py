@@ -21,12 +21,17 @@ def index(request):
     genres = Genre.objects.all()
     like_movies = request.user.like_movies.all()
     
+    like_movie_list = []
+    for like_movie in like_movies:
+        like_movie_list.append(like_movie)
+
     like_movie_director_movie_list = []
     for movie in movie_list:
         for like_movie in like_movies:
             if movie.director == like_movie.director:
-                if movie not in like_movie_director_movie_list:
-                    like_movie_director_movie_list.append(movie)
+                if movie not in like_movie_list:
+                    if movie not in like_movie_director_movie_list:
+                        like_movie_director_movie_list.append(movie)
     
     like_movie_genre_list = []
     for like_movie in like_movies:
@@ -37,41 +42,43 @@ def index(request):
     for like_movie_genre_movies in like_movie_genre_list:
         cnt = 0
         for like_movie_genre_movie in like_movie_genre_movies.genre_movie.all():
-            if like_movie_genre_movie not in like_movie_genre_movie_list:
-                like_movie_genre_movie_list.append(like_movie_genre_movie)
+            if like_movie_genre_movie not in like_movie_list:
+                if like_movie_genre_movie not in like_movie_director_movie_list:
+                    if like_movie_genre_movie not in like_movie_genre_movie_list:
+                        like_movie_genre_movie_list.append(like_movie_genre_movie)
             cnt += 1
-            if cnt == 5:
+            if cnt == 4:
                 break
 
     weather = Weather.objects.all()[0]
 
     if weather.name[33:35] == '01':
         genre = get_object_or_404(Genre, id=10749)
-        weather_text = '맑은 날씨입니다.'
+        weather_text = '서울, 맑은 날씨입니다.'
     elif weather.name[33:35] == '02':
         genre = get_object_or_404(Genre, id=35)
-        weather_text = '약간 구름이 있는 날씨입니다.'
+        weather_text = '서울, 약간 구름이 있는 날씨입니다.'
     elif weather.name[33:35] == '03':
         genre = get_object_or_404(Genre, id=12)
-        weather_text = '구름낀 날씨입니다.'
+        weather_text = '서울, 구름낀 날씨입니다.'
     elif weather.name[33:35] == '04':
         genre = get_object_or_404(Genre, id=18)
-        weather_text = '구름이 많은 날씨입니다.'
+        weather_text = '서울, 구름이 많은 날씨입니다.'
     elif weather.name[33:35] == '09':
         genre = get_object_or_404(Genre, id=80)
-        weather_text = '약간 비오는 날씨입니다.'
+        weather_text = '서울, 약간 비오는 날씨입니다.'
     elif weather.name[33:35] == '10':
         genre = get_object_or_404(Genre, id=53)
-        weather_text = '비오는 날씨입니다.'
+        weather_text = '서울, 비오는 날씨입니다.'
     elif weather.name[33:35] == '11':
         genre = get_object_or_404(Genre, id=27)
-        weather_text = '천둥 번개치는 날씨입니다.'
+        weather_text = '서울, 천둥 번개치는 날씨입니다.'
     elif weather.name[33:35] == '13':
         genre = get_object_or_404(Genre, id=14)
-        weather_text = '눈오는 날씨입니다.'
+        weather_text = '서울, 눈오는 날씨입니다.'
     elif weather.name[33:35] == '50':
         genre = get_object_or_404(Genre, id=9648)
-        weather_text = '안개낀 날씨입니다.'
+        weather_text = '서울, 안개낀 날씨입니다.'
     
     
     weather_movies = genre.genre_movie.all()[:6]

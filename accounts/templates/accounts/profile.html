@@ -6,17 +6,16 @@
   <div class="container">
   {% include 'accounts/_follow.html' %}
 
-  <hr>
-
-  <h2 class="font02">나의 활동</h2>
+  {% comment %} <h2 class="font02">나의 활동</h2> {% endcomment %}
     <div class="card-group" style="background-color:lightyellow;">
       <div class="card card-primary text-center">
         <img class="card-img-top" src="{% static 'icons/write.png' %}" alt="write">
         <div class="card-body">
           <div class="badge badge-primary badge-sm">REVIEW</div>
-          <div class="card-title"><h4 class="font03">{{ person.username }}가 쓴 글</h4></div>
+          <div class="card-title"><h5 class="font03"><b>{{ person.username }}가 쓴 글</b></h5></div>
           {% for review in person.review_set.all %}
-            <a href="{% url 'community:detail' review.pk %}"><p class="card-text">{{ review.title }}</p></a>
+            <a href="{% url 'community:detail' review.pk %}"><p class="card-text text-left">{{ review.title }}</p></a>
+            <hr>
           {% endfor %}
         </div>
         <div class="card-footer">
@@ -26,9 +25,10 @@
         <img class="card-img-top" src="{% static 'icons/comment.png' %}" alt="Comment">
         <div class="card-body">
           <div class="badge badge-primary badge-sm">COMMENT</div>
-          <div class="card-title"><h4 class="font03">{{ person.username }}가 쓴 댓글</h4></div>
+          <div class="card-title"><h5 class="font03"><b>{{ person.username }}가 쓴 댓글</b></h5></div>
           {% for comment in person.comment_set.all %}
-            <p class="card-text">{{ comment.content }}</p>
+            <p class="card-text text-left">{{ comment.content }}</p>
+            <hr>
           {% endfor %}
         </div>
         <div class="card-footer">
@@ -38,9 +38,10 @@
         <img class="card-img-top" src="{% static 'icons/like.png' %}" alt="Like_Review">
         <div class="card-body">
           <div class="badge badge-primary badge-sm">REVIEW_LIKES</div>
-          <div class="card-title"><h4 class="font03">{{ person.username }}가 좋아요한 글</h4></div>          
+          <div class="card-title"><h5 class="font03"><b>{{ person.username }}가 좋아요한 글</b></h5></div>          
           {% for review in person.like_reviews.all %}
-            <a href="{% url 'community:detail' review.pk %}"><p class="card-text">{{ review.title }}</p></a>
+            <a href="{% url 'community:detail' review.pk %}"><p class="card-text text-left">{{ review.title }}</p></a>
+            <hr>
           {% endfor %}
         </div>
         <div class="card-footer">
@@ -50,10 +51,10 @@
         <img class="card-img-top" src="{% static 'icons/camara.png' %}" alt="Like_Movie">
         <div class="card-body">
           <div class="badge badge-primary badge-sm">MOVIE_LIKES</div>
-          <div class="card-title"><h4 class="font03">{{ person.username }}가 좋아요한 영화</h4></div>          
+          <div class="card-title"><h5 class="font03"><b>{{ person.username }}가 좋아요한 영화</b></h5></div>          
           {% for movie in person.like_movies.all %}
-            <a href="{% url 'movies:detail' movie.id %}" class="card-text">{{ movie.title }}</a>
-            <br>
+            <a href="{% url 'movies:detail' movie.id %}"><p class="card-text text-left">{{ movie.title }}</p></a>
+            <hr>
           {% endfor %}
         </div>
         <div class="card-footer">

@@ -6,14 +6,14 @@
     <div class="row-mt-5">
         <div class="col-12">
             <!--본문-->
-            <div class="card" style="width: 100%;">
+            <div class="card mt-5" style="width: 100%;">
                 <!--제목,분류,작성일-->
                 <div class="card-header">
-                    <strong style="font-size: 18px;">{{ review.title }}</strong>
+                    <strong style="font-size: 25px;">{{ review.title }}</strong>
                     {% comment %} &nbsp;&nbsp;<span style="font-size: 18px; color: gray;">[공지사항]</span> {% endcomment %}
                     <div>
-                      <span style="float:right;">최초 작성: {{ review.created_at|date:'Y.m.d. H:i' }}</span><br>
-                      <span style="float:right;">수정: {{ review.updated_at|date:'Y.m.d. H:i' }}</span>
+                      <span style="float:right;">최초 작성 시각 : {{ review.created_at|date:'Y.m.d. H:i' }}</span><br>
+                      <span style="float:right;">수정 시각 : {{ review.updated_at|date:'Y.m.d. H:i' }}</span>
                     </div>
                 </div>
                 <div class="card-body" style="min-height: 400px; color:black;">
@@ -111,9 +111,9 @@
                         <input type="submit" value="DELETE" class="btn btn-sm" style="background-color: #d14040f2; color: white; margin-top:-5px; margin-right:-12px;">
                       </form>
                   </div>
-                  <hr>
                   {% endif %}
                 </div>
+                <hr>
               {% endfor %}
           </div>
           <br>
