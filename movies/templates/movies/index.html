@@ -23,7 +23,7 @@
         </div>
       </div>
       <br>
-      <div class="row row-cols-1 row-cols-md-6">
+      <div class="row row-cols-1 row-cols-sm-3 row-cols-md-6">
         {% for weather_movie in weather_movies %}
           <div class="col mb-3">
             <div class="card-content">
@@ -54,7 +54,7 @@
 
     <!-- 좋아요 누른 영화 목록 -->
     <h2 class="font02">#내가 좋아하는 영화</h2>
-      <div class="row row-cols-1 row-cols-md-6">
+      <div class="row row-cols-1 row-cols-sm-3 row-cols-md-6">
         {% for like_movie in like_movies %}
           <div class="col mb-3">
             <div class="card-content">
@@ -67,7 +67,7 @@
 
     <!-- 좋아요한 영화의 감독의 다른 영화 추천 -->
     <h2 class="font02">#내가 좋아하는 감독의 영화</h2>
-    <div class="row row-cols-1 row-cols-md-6">
+    <div class="row row-cols-1 row-cols-sm-3 row-cols-md-6">
         {% for like_movie_director_movie in like_movie_director_movie_list %}
           <div class="col mb-3">
             <div class="card-content">
@@ -80,7 +80,7 @@
 
     <!-- 좋아요한 영화와 같은 장르의 영화 평점 높은 순으로 정렬 -->
     <h2 class="font02">#취향저격!</h2>
-    <div class="row row-cols-1 row-cols-md-6">
+    <div class="row row-cols-1 row-cols-sm-3 row-cols-md-6">
       {% for like_movie_genre_movie in like_movie_genre_movie_list %}
         <div class="col mb-3">
           <div class="card-content">
