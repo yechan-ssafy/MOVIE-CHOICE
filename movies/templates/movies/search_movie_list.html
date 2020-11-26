@@ -31,7 +31,7 @@
   <br>
   <div class="container mt-5">
     <div class="row row-cols-1 row-cols-sm-3 row-cols-md-6">
-      {% for movie in search_movie_list %}
+      {% for movie in search_movie_list  %}
         <div class="col mb-3">
           <div class="card-content">
             <a class="spectrum-a" href="{% url 'movies:detail' movie.pk %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ movie.poster_path }}" alt="poster"></a>
