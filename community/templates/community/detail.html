@@ -60,7 +60,6 @@
                     {% csrf_token %}
                     <input type="submit" value="삭제" id="delete_btn">
                   </form>
-                  <!-- <button class="btn btn-md btn-dark" onclick="location.href='/notice/{{ notice.id }}/delete/'">삭제</button> -->
                   <button class="btn btn-sm" id="detail_btn" onclick="location.href='{% url 'community:index' %}'">목록으로</button>
                 </div>
                 {% else %}
@@ -77,7 +76,6 @@
           <div class="col-md-12">
               {% csrf_token %}
               <div class="form-group d-flex">
-                  {% comment %} <textarea class="form-control" id="content_id" rows="3" placeholder="댓글을 입력해주세요." style="margin-top:6px;"></textarea> {% endcomment %}
                   {% if request.user.is_authenticated %}
                     <form style="width: 100%;"action="{% url 'community:create_comment' review.pk %}" method="POST" name="comment-form">
                       {% csrf_token %}
@@ -90,9 +88,6 @@
                     <a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인하세요.]</a>
                   {% endif %}
               </div>
-              {% comment %} <div class="text-right" style="float:right">
-                  <button id="comment_write" class="btn btn-sm" style="background-color: #d14040f2; color: white; font-size: 15px; margin-top:-5px; margin-right:-12px;">댓글달기</button>
-              </div> {% endcomment %}
               {% if comments|length %}
                 <p><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
               {% else %}
@@ -121,58 +116,7 @@
     </div>
     </div>
   </div>
-
-
-  <!-- 기존 디테일 페이지-->
-  {% comment %} <h2 class="text-center">DETAIL</h2>
-  <h3>{{ review.pk }} 번째 글</h3>
-  <hr>
-  <p>제목: {{ review.title }}</p>
-  <p>영화 제목: {{ review.movie.title }}</p>
-  <p>내용: {{ review.content }}</p>
-  <p>평점: {{ review.rank }}</p>
-  <p>작성 시각: {{ review.created_at }}</p>
-  <p>수정 시각: {{ review.updated_at }}</p>
-  <hr>
-  {% if request.user == review.user %}
-    <a href="{% url 'community:update' review.pk %}">UPDATE</a>
-    <br>
-    <form action="{% url 'community:delete' review.pk %}" method="POST">
-      {% csrf_token %}
-      <input type="submit" value="DELETE">
-    </form>
-  {% endif %}
-  <a href="{% url 'community:index' %}">[back]</a>
-  <hr>
-  <h4>댓글 목록</h4>
-  {% if comments|length %}
-    <p><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
-  {% endif %}
-  {% for comment in comments %}
-    <div>
-      {{ comment.user }} - {{ comment.content }} | {{ comment.created_at }}
-      {% if request.user == comment.user %}
-        <form action="{% url 'community:comments_delete' review.pk comment.pk %}" method="POST" class="d-inline">
-          {% csrf_token %}
-          <input type="submit" value="DELETE">
-        </form>
-      {% endif %}
-    </div>
-  {% empty %}
-    <p><b>댓글이 없어요..</b></p>
-  {% endfor %}
-  <hr>
-  {% if request.user.is_authenticated %}
-    <form action="{% url 'community:create_comment' review.pk %}" method="POST">
-      {% csrf_token %}
-      {{ comment_form }}
-      <input type="submit">
-    </form>
-  {% else %}
-    <a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인하세요.]</a>
-  {% endif %}
-  <a href="{% url 'community:index' %}">[back]</a> {% endcomment %}
-  {% endblock  %}
+{% endblock  %}
 
 {% block style %}
   label {
@@ -229,6 +173,5 @@
 
       })
     })
-  
   </script>
 {% endblock %}

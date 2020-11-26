@@ -15,7 +15,7 @@ from django.db.models import Q
 def index(request):
     reviews = Review.objects.all()
 
-    ### 검색 기능
+    # 검색 기능
     search_keyword = request.GET.get('q', '')
     search_type = request.GET.get('type', '')
     notice_list = Review.objects.order_by('-id') 
@@ -34,16 +34,10 @@ def index(request):
                 search_notice_list = notice_list.filter(movie__icontains=search_keyword)    
             elif search_type == 'writer':
                 search_notice_list = notice_list.filter(user__username__icontains=search_keyword)
-            # else:
-                # messages.error(request, '일치하는 검색어가 없습니다.')
-
-        # else:
-            # messages.error(request, '검색어는 2글자 이상 입력해주세요.')
 
         reviews = search_notice_list
-            # print(reviews)
 
-    ### pagination
+    # pagination
     total_len = len(reviews)
     paginator = Paginator(reviews, 10)
     page = request.GET.get('page', 1)
@@ -195,4 +189,3 @@ def like(request, review_pk):
         }
         return JsonResponse(data)
     return redirect('accounts:login')
-

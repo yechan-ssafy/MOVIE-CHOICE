@@ -1,67 +1,55 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  {% comment %} <h1 class="text-center">CREATE</h1> {% endcomment %}
-
-<div class="container">
-    <div class="row mt-5">
-        <div class="col-12">
-            <h4 style="font-weight: bold;">리뷰 쓰기</h4>
-        </div>
-    </div>
-    <br>
-    <div class="row-mt-5">
-        <!--본문-->
-        <form action="" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="card" style="width: 100%;">
-                <!--제목,분류,작성일-->
-                <div class="card-header" style="padding: 0rem 0.8rem">
-                    <div class="md-form form-group" style="margin-top: 8.5px;">
-                        <div style="padding: 0 5.5px;">
-                            <!-- <label for="form_title" class="control-label">{{ form.title.label }}</label> -->
-                            제목 : {{ form.title }}
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <div class=" col-sm-12">
-                            영화 : {{ form.movie }}<br>
-                            평점 : {{ form.rank }}<br>
-                            <hr>
-                            리뷰{{ form.content }}
-                        </div>
-                    </div>
-                </div>
-                <div>
-                </div>
-            </div>
-            <br>
-            <div class="row align-items-center justify-content-between">
-              <a class="font02 mt-2 ml-3" href="{% url 'community:index' %}">뒤로가기</a>
-              <div class="text-right mr-4" style="margin-top: 10px;">
-                {% if edit %}
-                <button type="submit" id="write" class="btn btn-sm">{{ edit }}</button>
-                {% else %}
-                <input type="submit" id="write" value="작성하기" class="btn btn-sm" style="background-color: #6495ED; color: white; margin-top:-5px; margin-right:-12px;">
-                {% endif %}
-                <input type="checkbox" id="fileChangeCheck" name="fileChange" style="display: none;">
-            </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-
-  <!-- 기존 게시글 -->
-  {% comment %} <form action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit">
-  </form>
-  <hr>
-  <a href="{% url 'community:index' %}">[back]</a> {% endcomment %}
+  <div class="container">
+      <div class="row mt-5">
+          <div class="col-12">
+              <h4 style="font-weight: bold;">리뷰 쓰기</h4>
+          </div>
+      </div>
+      <br>
+      <div class="row-mt-5">
+          <!--본문-->
+          <form action="" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="card" style="width: 100%;">
+                  <!--제목,분류,작성일-->
+                  <div class="card-header" style="padding: 0rem 0.8rem">
+                      <div class="md-form form-group" style="margin-top: 8.5px;">
+                          <div style="padding: 0 5.5px;">
+                              <!-- <label for="form_title" class="control-label">{{ form.title.label }}</label> -->
+                              제목 : {{ form.title }}
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card-body">
+                      <div class="form-group">
+                          <div class=" col-sm-12">
+                              영화 : {{ form.movie }}<br>
+                              평점 : {{ form.rank }}<br>
+                              <hr>
+                              리뷰{{ form.content }}
+                          </div>
+                      </div>
+                  </div>
+                  <div>
+                  </div>
+              </div>
+              <br>
+              <div class="row align-items-center justify-content-between">
+                <a class="font02 mt-2 ml-3" href="{% url 'community:index' %}">뒤로가기</a>
+                <div class="text-right mr-4" style="margin-top: 10px;">
+                  {% if edit %}
+                  <button type="submit" id="write" class="btn btn-sm">{{ edit }}</button>
+                  {% else %}
+                  <input type="submit" id="write" value="작성하기" class="btn btn-sm" style="background-color: #6495ED; color: white; margin-top:-5px; margin-right:-12px;">
+                  {% endif %}
+                  <input type="checkbox" id="fileChangeCheck" name="fileChange" style="display: none;">
+              </div>
+              </div>
+          </form>
+      </div>
+  </div>
 {% endblock %}
 
 {% block style %}
@@ -89,6 +77,5 @@
     document.getElementById('id_content').placeholder = '내용을 입력해주세요.';
     document.getElementById('id_title').placeholder = '리뷰 제목을 입력해주세요.';
     document.getElementById('id_content').rows = 10;
-  
   </script>
 {% endblock %}

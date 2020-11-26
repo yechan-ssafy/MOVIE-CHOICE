@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block content %}  
-  {% comment %} <h1 class="text-center font02">{{ person.username }}님의 프로필</h1> {% endcomment %}
+{% block content %}
   <div class="container">
   {% include 'accounts/_follow.html' %}
 
-  {% comment %} <h2 class="font02">나의 활동</h2> {% endcomment %}
-    <div class="card-group" style="background-color:lightyellow;">
+    <div class="card-group">
       <div class="card card-primary text-center">
         <img class="card-img-top" src="{% static 'icons/write.png' %}" alt="write">
         <div class="card-body">
@@ -101,13 +99,9 @@
     .jumbotron {
       height: 30px;
     } 
-    
     .card {
       border:0;
     }
-
-
-    /* card group aka PRIMARY */
     .card-group .card-primary:hover {
       box-shadow: 0 40px 60px -20px rgba(12, 5, 62, 0.15);
       z-index: 100;
@@ -145,7 +139,5 @@
       background: transparent;
       border:0;
     }
-    
   </style>
-
 {% endblock %}

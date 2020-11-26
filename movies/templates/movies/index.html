@@ -2,115 +2,98 @@
 {% load static %}
 
 {% block content %}
-    <h1 class="font01 d-flex justify-content-center mt-5">Movies</h1>
-    <div class="container mb-3">
-      <div class="d-flex row justify-content-end">
-        <p class="font02">영화 검색<a href="{% url 'movies:search' %}"><img class="ml-3" src="{% static 'icons/search.png' %}" alt="search"></a></p>
-      </div>
-      <hr>
-      <!-- 날씨 상태에 따라 영화 추천 -->
-      <h2 class="font02">#날씨별 영화 추천</h2>
-      <div>
-        <div class="row align-items-center">
-          <img src="{{ weather.name }}">
-          <span class="font03">{{ weather_text }}</span>        
-          <div class="ml-5 col-sm-3">
-            <div class="card card_three text-center align-items-center justify-content-center">
-              <div class="title">
-                  <a href="{% url 'movies:weather_api_url' %}"><h4 class="font02" style="margin-bottom: 0; color: black; font-size: 20px;">날씨 정보 새로고침</h4></a>
-              </div>
+  <h1 class="font01 d-flex justify-content-center mt-5">Movies</h1>
+  <div class="container mb-3">
+    <div class="d-flex row justify-content-end">
+      <p class="font02">영화 검색<a href="{% url 'movies:search' %}"><img class="ml-3" src="{% static 'icons/search.png' %}" alt="search"></a></p>
+    </div>
+    <hr>
+    <!-- 날씨 상태에 따라 영화 추천 -->
+    <h2 class="font02">#날씨별 영화 추천</h2>
+    <div>
+      <div class="row align-items-center">
+        <img src="{{ weather.name }}">
+        <span class="font03">{{ weather_text }}</span>        
+        <div class="ml-5 col-sm-3">
+          <div class="card card_three text-center align-items-center justify-content-center">
+            <div class="title">
+                <a href="{% url 'movies:weather_api_url' %}"><h4 class="font02" style="margin-bottom: 0; color: black; font-size: 20px;">날씨 정보 새로고침</h4></a>
             </div>
           </div>
-        </div>
-        <br>
-        <div class="row row-cols-1 row-cols-md-6">
-          {% for weather_movie in weather_movies %}
-            <div class="col mb-3">
-              <div class="card-content">
-                <a class="spectrum-a" href="{% url 'movies:detail' weather_movie.id %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ weather_movie.poster_path }}" alt="{{ weather_movie.title }}"></a>
-              </div>
-            </div>
-          {% endfor %}
         </div>
       </div>
       <br>
-      <hr>
-
-      <h2 class="font02">#장르별 추천</h2>
-      <div class="row">
-        {% for genre in genres %}
-          {% if genre.name != '다큐멘터리' %}
-          <div class="col-sm-2" style="margin-right: 20;">
-            <div class="card card_red text-center align-items-center justify-content-center">
-              <div class="title">
-                  <a href="{% url 'movies:genre_movie_list' genre.name %}"><h4 class="font02" style="margin-bottom: 0; color: black; font-size: 20px;">#{{ genre.name }}</h4></a>
-              </div>
-            </div>
-          </div>
-          {% endif %}
-        {% endfor %}
-      </div><br>
-      <hr>
-
-    <!-- 좋아요 누른 영화 목록 -->
-      <h2 class="font02">#내가 좋아하는 영화</h2>
-        <div class="row row-cols-1 row-cols-md-6">
-          {% for like_movie in like_movies %}
-            <div class="col mb-3">
-              <div class="card-content">
-                <a class="spectrum-a" href="{% url 'movies:detail' like_movie.id %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ like_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-        <hr>
-
-    <!-- 좋아요한 영화의 감독의 다른 영화 추천 -->
-      <h2 class="font02">#내가 좋아하는 감독의 영화</h2>
       <div class="row row-cols-1 row-cols-md-6">
-          {% for like_movie_director_movie in like_movie_director_movie_list %}
-            <div class="col mb-3">
-              <div class="card-content">
-                <a class="spectrum-a" href="{% url 'movies:detail' like_movie_director_movie.id %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ like_movie_director_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
-              </div>
-            </div>
-          {% endfor %}
-      </div>
-      <hr>
-
-    <!-- 좋아요한 영화와 같은 장르의 영화 평점 높은 순으로 정렬 -->
-      <h2 class="font02">#취향저격!</h2>
-      <div class="row row-cols-1 row-cols-md-6">
-        {% for like_movie_genre_movie in like_movie_genre_movie_list %}
+        {% for weather_movie in weather_movies %}
           <div class="col mb-3">
             <div class="card-content">
-              <a class="spectrum-a" href="{% url 'movies:detail' like_movie_genre_movie.id %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ like_movie_genre_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
+              <a class="spectrum-a" href="{% url 'movies:detail' weather_movie.id %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ weather_movie.poster_path }}" alt="{{ weather_movie.title }}"></a>
             </div>
           </div>
         {% endfor %}
       </div>
     </div>
-    <br> 
-  
+    <br>
+    <hr>
+
+    <h2 class="font02">#장르별 추천</h2>
+    <div class="row">
+      {% for genre in genres %}
+        {% if genre.name != '다큐멘터리' %}
+        <div class="col-sm-2" style="margin-right: 20;">
+          <div class="card card_red text-center align-items-center justify-content-center">
+            <div class="title">
+                <a href="{% url 'movies:genre_movie_list' genre.name %}"><h4 class="font02" style="margin-bottom: 0; color: black; font-size: 20px;">#{{ genre.name }}</h4></a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div><br>
+    <hr>
+
+    <!-- 좋아요 누른 영화 목록 -->
+    <h2 class="font02">#내가 좋아하는 영화</h2>
+      <div class="row row-cols-1 row-cols-md-6">
+        {% for like_movie in like_movies %}
+          <div class="col mb-3">
+            <div class="card-content">
+              <a class="spectrum-a" href="{% url 'movies:detail' like_movie.id %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ like_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <hr>
+
+    <!-- 좋아요한 영화의 감독의 다른 영화 추천 -->
+    <h2 class="font02">#내가 좋아하는 감독의 영화</h2>
+    <div class="row row-cols-1 row-cols-md-6">
+        {% for like_movie_director_movie in like_movie_director_movie_list %}
+          <div class="col mb-3">
+            <div class="card-content">
+              <a class="spectrum-a" href="{% url 'movies:detail' like_movie_director_movie.id %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ like_movie_director_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
+            </div>
+          </div>
+        {% endfor %}
+    </div>
+    <hr>
+
+    <!-- 좋아요한 영화와 같은 장르의 영화 평점 높은 순으로 정렬 -->
+    <h2 class="font02">#취향저격!</h2>
+    <div class="row row-cols-1 row-cols-md-6">
+      {% for like_movie_genre_movie in like_movie_genre_movie_list %}
+        <div class="col mb-3">
+          <div class="card-content">
+            <a class="spectrum-a" href="{% url 'movies:detail' like_movie_genre_movie.id %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ like_movie_genre_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <br> 
 {% endblock %}
 
-{% comment %} {% block script %}
-  <script>
-    var outer = $('.wrap');
-
-    $('#right').click(function() {
-          outer.animate({scrollLeft: '+=30%'}, 500);
-    });
-
-    $('#left').click(function() {
-          outer.animate({scrollLeft: '-=30%'}, 500);
-    });
-  </script>
-
-{% endblock %} {% endcomment %}
-
 {% block style %}
-  
   .wrap {
      width: 100%;
      height: 100%;
@@ -187,13 +170,6 @@
   p.site-title {
   color: #000000;
   }
-
-  {% comment %} article.col-md-4 col-lg-3 {
-  background: #f5f5f5;
-    margin-top: 1em;
-  margin-bottom: 2em;
-    box-shadow: 3px 3px 8px hsl(0, 0%, 70%);
-  } {% endcomment %}
 
   div.card-content {
     background: #f5f5f5;
