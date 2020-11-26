@@ -169,7 +169,7 @@ manage.py
 
 - 데이터베이스에서 모델의 ERD는 아래와 같습니다.
 
-![2. ERD](assets/2. ERD.JPG)
+![2. ERD](assets/2. ERD.jpg)
 
 
 
