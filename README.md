@@ -1,8 +1,6 @@
 # MOVIE CHOICE
 
-> SSAFY 4기 1학기 종합 PJT
->
-> 이세빈, 김예찬
+ [![python version](https://img.shields.io/badge/python-v3.7-blue.svg)](https://shields.io/) [![Generic badge](https://img.shields.io/badge/Django-3.X-<COLOR>.svg)](https://shields.io/) [![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg) ](https://GitHub.com/Naereen/StrapDown.js/releases/)
 
 
 
@@ -12,6 +10,8 @@
 
 ## 1. 프로젝트 소개
 
+> SSAFY 4기 1학기 종합 PJT
+>
 > MOVIE CHOICE 프로젝트를 소개합니다!
 
 
@@ -93,71 +93,73 @@
 - community/는 startapp 명령어로 생성되는 application 디렉토리입니다.
 - 아래의 폴더구조는 주요한 폴더와 파일만 명시되어 있습니다.
 
+```
 final_project/
 
-​		settings/
+	settings/
 
-​		static/
+	static/
 
-​		templates/
+	templates/
 
-​				base.html
+		base.html
 
-​				home.html
+		home.html
 
-​		settings.py
+	settings.py
 
-​		urls.py
+	urls.py
 
-​		views.py
+	views.py
 
-​		wsgi.py
+	wsgi.py
 
 accounts/
 
-​	migrations/
+	migrations/
 
-​	templates/
+	templates/
 
-​	forms.py
+	forms.py
 
-​	models.py
+	models.py
 
-​	urls.py
+	urls.py
 
-​	views.py
+	views.py
 
 community/
 
-​		migrations/
+	migrations/
 
-​		templates/
+	templates/
 
-​		forms.py
+	forms.py
 
-​		models.py
+	models.py
 
-​		urls.py
+	urls.py
 
-​		views.py
+	views.py
 
 movies/
 
-​		migrations/
+	migrations/
 
-​		templates/
+	templates/
 
-​		forms.py
+	forms.py
 
-​		models.py
+	models.py
 
-​		urls.py
+	urls.py
 
-​		views.py
+	views.py
 
 manage.py
 
 ...
+```
 
 
 
