@@ -1,4 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.decorators.http import require_GET, require_POST, require_http_methods
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.conf import settings
 
 from .models import Movie, Genre, Grade, Weather
 from .forms import GradeForm
@@ -6,9 +10,6 @@ from .forms import GradeForm
 import requests
 import json
 from pprint import pprint
-from django.http import JsonResponse
-from django.views.decorators.http import require_GET, require_POST, require_http_methods
-from django.contrib.auth.decorators import login_required
 
 from django.db.models import Q
 
@@ -21,10 +22,12 @@ def index(request):
     genres = Genre.objects.all()
     like_movies = request.user.like_movies.all()
     
+    # 추천 알고리즘 1 - 좋아요 한 영화
     like_movie_list = []
     for like_movie in like_movies:
         like_movie_list.append(like_movie)
 
+    # 추천 알고리즘 2 - 좋아요 한 영화의 감독의 다른 영화
     like_movie_director_movie_list = []
     for movie in movie_list:
         for like_movie in like_movies:
@@ -38,6 +41,7 @@ def index(request):
         for like_movie_genre in like_movie.genres.all():
             like_movie_genre_list.append(like_movie_genre)
     
+    # 추천 알고리즘 3 - 좋아요 한 영화의 장릐의 다른 영화
     like_movie_genre_movie_list = []
     for like_movie_genre_movies in like_movie_genre_list:
         cnt = 0
@@ -50,6 +54,7 @@ def index(request):
             if cnt == 4:
                 break
 
+    # 추천 알고리즘 4 - 현재 날씨에 따른 장르 추천
     weather = Weather.objects.all()[0]
 
     if weather.name[33:35] == '01':
@@ -80,7 +85,6 @@ def index(request):
         genre = get_object_or_404(Genre, id=9648)
         weather_text = '서울, 안개낀 날씨입니다.'
     
-    
     weather_movies = genre.genre_movie.all()[:6]
 
     context = {
@@ -98,7 +102,12 @@ def index(request):
 
 
 def movie_api_url(request):
-    genre_api_url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=334075ba2b018bdb3e91bc504676f9b9&language=ko-kr'
+    TMDB_API_KEY = getattr(settings, 'TMDB_API_KEY', 'TMDB_API_KEY')
+    NAVER_ID = getattr(settings, 'NAVER_ID', 'NAVER_ID')
+    NAVER_SECRET = getattr(settings, 'NAVER_SECRET', 'NAVER_SECRET')
+    WEATHER_API_KEY = getattr(settings, 'WEATHER_API_KEY', 'WEATHER_API_KEY')
+
+    genre_api_url = f'https://api.themoviedb.org/3/genre/movie/list?api_key={TMDB_API_KEY}&language=ko-kr'
     genre_res = requests.get(genre_api_url).json()
 
     for i in range(len(genre_res['genres'])):
@@ -107,15 +116,14 @@ def movie_api_url(request):
         genre.name = genre_res['genres'][i]['name']
         genre.save()
     
-    movie_api_url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=334075ba2b018bdb3e91bc504676f9b9&language=ko-kr&page='
+    movie_api_url = f'https://api.themoviedb.org/3/movie/top_rated?api_key={TMDB_API_KEY}&language=ko-kr&page='
 
     naver_api_url = 'https://openapi.naver.com/v1/search/movie?'
     
     header = {
-        "X-Naver-Client-id" : 'OEgZw6A_eZA48PaN7Pr9',
-        "X-naver-Client-secret" : '4lwUhtd2ib'
+        "X-Naver-Client-id" : NAVER_ID,
+        "X-naver-Client-secret" : NAVER_SECRET
     }
-
 
     for i in range(1, 400):
         new_movie_api_url = movie_api_url + str(i)
@@ -161,7 +169,7 @@ def movie_api_url(request):
                     movie.genres.add(get_object_or_404(Genre, id=genre_id))
                 movie.save()
     
-    weather_URL = 'http://api.openweathermap.org/data/2.5/weather?q=Seoul,kr&appid=db742ca54c4ec840bca1892c6eace001&lang=kr'
+    weather_URL = f'http://api.openweathermap.org/data/2.5/weather?q=Seoul,kr&appid={WEATHER_API_KEY}&lang=kr'
 
     weather_res = requests.get(weather_URL)
     weather_data = json.loads(weather_res.text)
@@ -180,7 +188,8 @@ def movie_api_url(request):
 
 
 def weather_api_url(request):
-    weather_URL = 'http://api.openweathermap.org/data/2.5/weather?q=Seoul,kr&appid=db742ca54c4ec840bca1892c6eace001&lang=kr'
+    WEATHER_API_KEY = getattr(settings, 'WEATHER_API_KEY', 'WEATHER_API_KEY')
+    weather_URL = f'http://api.openweathermap.org/data/2.5/weather?q=Seoul,kr&appid={WEATHER_API_KEY}&lang=kr'
 
     weather_res = requests.get(weather_URL)
     weather_data = json.loads(weather_res.text)

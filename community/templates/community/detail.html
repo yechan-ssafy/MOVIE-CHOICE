@@ -10,7 +10,7 @@
                 <!--제목,분류,작성일-->
                 <div class="card-header">
                     <strong style="font-size: 25px;">{{ review.title }}</strong>
-                    {% comment %} &nbsp;&nbsp;<span style="font-size: 18px; color: gray;">[공지사항]</span> {% endcomment %}
+                    &nbsp;&nbsp;<span style="font-size: 18px; color: gray;">{{ review.movie }}</span>
                     <div>
                       <span style="float:right;">최초 작성 시각 : {{ review.created_at|date:'Y.m.d. H:i' }}</span><br>
                       <span style="float:right;">수정 시각 : {{ review.updated_at|date:'Y.m.d. H:i' }}</span>

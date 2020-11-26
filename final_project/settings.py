@@ -20,7 +20,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+import os, json
+from django.core.exceptions import ImproperlyConfigured
+
+secret_file = os.path.join(BASE_DIR, 'secrets.json')
+
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
+
 SECRET_KEY = 'o(%o210v*q2jbhut6i8*d2-!toytlif0so(*op(pg088qbsfmj'
+TMDB_API_KEY = get_secret("TMDB_API_KEY")
+NAVER_ID = get_secret("NAVER_ID")
+NAVER_SECRET = get_secret("NAVER_SECRET")
+WEATHER_API_KEY = get_secret("WEATHER_API_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

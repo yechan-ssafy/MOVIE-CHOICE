@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,40 +17,106 @@
 
   <title>MOVIE CHOICE</title>
   <style>
-    
-    /*1121*/
-    body { padding: 0px; margin: 0px; }
-    .jb-box { width: 100%; height: 500px; overflow: hidden; margin: 48px auto 0px; opacity: 0.7;}
-    .jb-box2 { width: 100%; height: 500px; overflow: hidden; margin: 0px; opacity: 0.7;}
-    .jb-box3 { width: 100%; overflow: hidden; margin: 0px; opacity: 0.7;}
-    video { width: 100%; }
-    .jb-text { position: absolute; top: 200px; width: 100%; }
-    .jb-text p { margin-top: -24px; text-align: center; font-size: 48px; font-family: 'Castoro', serif; font-weight: 1;
-      font-weight: 700; color: #ffffff; }
-    .jb-text2 { position: absolute; top: 800px; width: 100%; }
-    .jb-text2 p { margin-top: -24px; text-align: center; font-size: 48px; font-family: 'Castoro', serif; font-weight: 700;
-      font-weight: 700;color: #f0415e; }
-    .jb-text3 { position: absolute; top: 1500px; width: 100%; }
-    .jb-text3 p { margin-top: -24px; text-align: center; font-size: 48px; font-family: 'Castoro', serif; font-weight: 700;
-      font-weight: 700; color: #ffffff; }
-    .arrow {  width: 100%; height: 100px; margin-top: 24px; text-align: center;}
-    h6 { text-align: center; }
-
-    html,
-    
-    body {
-      width: 100%;
-      height: 100%;
+    body { 
+      padding: 0px; 
+      margin: 0px;
     }
-    
-    .container {
-      width: 100%;
-      height: 100%;
+    .jb-box { 
+      width: 100%; 
+      height: 500px; 
+      overflow: hidden; 
+      margin: 48px auto 0px; 
+      opacity: 0.7;
     }
-
+    .jb-box2 { 
+      width: 100%; 
+      height: 500px; 
+      overflow: hidden; 
+      margin: 0px; 
+      opacity: 0.7;
+    }
+    .jb-box3 { 
+      width: 100%; 
+      overflow: hidden; 
+      margin: 0px; 
+      opacity: 0.7;
+    }
+    video { 
+      width: 100%; 
+    }
+    .jb-text { 
+      position: absolute; 
+      top: 200px; 
+      width: 100%; 
+    }
+    .jb-text p { 
+      margin-top: -24px; 
+      text-align: center; 
+      font-size: 48px; 
+      font-family: 'Castoro', serif; font-weight: 1;
+      font-weight: 700; color: #ffffff; 
+    }
+    .jb-text2 { 
+      position: absolute; 
+      top: 800px; 
+      width: 100%; 
+    }
+    .jb-text2 p { 
+      margin-top: -24px; 
+      text-align: center; 
+      font-size: 48px; 
+      font-family: 'Castoro', serif; 
+      font-weight: 700;
+      color: #f0415e; 
+    }
+    .jb-text3 { 
+      position: absolute; 
+      top: 1500px; 
+      width: 100%; 
+    }
+    .jb-text3 p { 
+      margin-top: -24px; 
+      text-align: center; 
+      font-size: 48px; 
+      font-family: 'Castoro', serif; 
+      font-weight: 700; 
+      color: #ffffff; 
+    }
+    .arrow {  
+      width: 100%;
+      height: 100px; 
+      margin-top: 24px; 
+      text-align: center;
+    }
+    h6 { 
+      text-align: center; 
+    }
+    .banner:hover {
+      text-decoration: none;
+    }
+    .font02 {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 700;
+    }
+    .font03 {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 400;
+    }
+    div a, a:hover {
+      text-decoration: none;
+    }
+    footer {
+      text-align: center;
+      background-color: black;
+      color: white;
+    }
+    .bottom {
+      margin-bottom: 0.3rem;
+    }
   </style>
 </head>
 <body>
+  <!-- navbar -->
   <div class="d-flex flex-column fixed-top">
     <div class='sticky-top d-flex flex-row align-items-center justify-content-between' style="background-color:white; border-bottom: 1px solid rgba(var(--b6a,219,219,219),1);">
       <div class='d-flex flex-row align-items-center'>
@@ -56,21 +124,6 @@
           <img class='mt-1 ml-4' src="https://upload-icon.s3.us-east-2.amazonaws.com/uploads/icons/png/3400650091557749680-512.png" style="width:30px;" alt="">
         </a>
         <a href="{% url 'index' %}" class="banner"><h4 class='mt-2' style="color: black;">MOVIE CHOICE</h4></a>
-        {% comment %} <div class='ml-2 mt-1 d-flex justify-content-between' >
-        <a class='btn' href="{% url 'movies:index' %}">영화 목록</a> 
-        {% if request.user.is_authenticated %}
-          <a class='btn' href="{% url 'accounts:profile' user.username %}">Profile</a>
-          <a class='btn' href="{% url 'community:index' %}">커뮤니티</a>
-          <form action="{% url 'accounts:logout' %}" method="POST">
-            {% csrf_token %}
-            <button class='btn'type="submit">Logout</button>
-          </form>
-        {% else %}
-          <a class='btn' href="{% url 'accounts:signup' %}">Signup</a>
-          <a class='btn' href="{% url 'accounts:login' %}">Login</a>
-        {% endif %}
-        <hr/>
-        </div> {% endcomment %}
       </div>
       {% if request.user.is_authenticated %}
         <div class='mr-4 row align-items-center'>
@@ -79,9 +132,9 @@
       {% endif %}
     </div>
   </div>
+  <!-- video box 1 -->
   <div class="jb-box">
     <video muted autoplay loop>
-      {% load static %}
       <source src="{% static '/videos/Glacier Express.mp4' %}" type="video/mp4">
       <strong>Your browser does not support the video tag.</strong>
     </video>
@@ -93,12 +146,11 @@
     </div>
   </div>
   <div class="arrow">
-    {% load static %}
     <img src="{% static 'icons/downarrow.png' %}" alt="downarrow">
   </div>
+  <!-- video box 2 -->
   <div class="jb-box2">
     <video muted autoplay loop>
-      {% load static %}
       <source src="{% static '/videos/Girl.mp4' %}" type="video/mp4">
       <strong>Your browser does not support the video tag.</strong>
     </video>
@@ -110,12 +162,11 @@
     </div>
   </div>
   <div class="arrow">
-    {% load static %}
     <img src="{% static 'icons/downarrow.png' %}" alt="downarrow">
   </div>
+  <!-- video box 3 -->
   <div class="jb-box3">
     <video muted autoplay loop>
-      {% load static %}
       <source src="{% static '/videos/Cycling.mp4' %}" type="video/mp4">
       <strong>Your browser does not support the video tag.</strong>
     </video>
@@ -125,7 +176,7 @@
       <h6 class="font02 text-warning">당신의 생각을 다른 사람들과 공유해보세요.</h6>
       <p><a href="{% url 'community:index' %}" class="btn btn-primary center mt-5">Share Review</a></p>
     </div>
-  
+  <!-- footer -->
   <footer>
     <h2 class="font03">MOVIE CHOICE</h2>
     <p class="font03 bottom">SSAFY Final Project</p>
@@ -143,28 +194,4 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </body>
-<style>
-  .banner:hover {
-    text-decoration: none;
-  }
-  .font02 {
-    font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 700;
-  }
-  .font03 {
-    font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 400;
-  }
-  div a, a:hover {
-    text-decoration: none;
-  }
-  footer {
-  text-align: center;
-  background-color: black;
-  color: white;
-  }
-  .bottom {
-    margin-bottom: 0.3rem;
-  }
-</style>
 </html>

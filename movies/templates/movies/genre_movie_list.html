@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1 class="font01 text-center">#{{ genre.name }}</h1>
+  <h1 class="font01 text-center mt-5">#{{ genre.name }}</h1>
   <br>
   <div class="container">
     <div class="row row-cols-1 row-cols-md-6">
@@ -14,28 +14,12 @@
       {% endfor %}
     </div>
   </div>
-
-  {% comment %} <h1 class="text-center">{{ genre.name }}</h1>
-  <hr>
-  {% for movie in movie_list %}
-    <a href="{% url 'movies:detail' movie.pk %}"><p>{{ movie.title }}</p></a>
-  {% endfor %} {% endcomment %}
 {% endblock %}
 
 {% block style %}
-  /* Card Based Layout - Base styles */
-
   p.site-title {
   color: #000000;
   }
-
-  {% comment %} article.col-md-4 col-lg-3 {
-  background: #f5f5f5;
-    margin-top: 1em;
-  margin-bottom: 2em;
-    box-shadow: 3px 3px 8px hsl(0, 0%, 70%);
-  } {% endcomment %}
-
   div.card-content {
     background: #f5f5f5;
     padding: 0.5em;
