@@ -154,7 +154,6 @@
       const reviewId = likeBtnForm.dataset.reviewid
       likeBtnForm.addEventListener('click', function (e) {
         e.preventDefault()
-        // 좋아요 요청 주소 :  path('<int:review_pk>/like/', views.like, name='like'),
         const API_URL = `/community/${reviewId}/like/`
         const csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
         const options = {headers: {'X-CSRFToken': csrfToken}}
