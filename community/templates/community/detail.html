@@ -9,12 +9,13 @@
             <div class="card mt-5" style="width: 100%;">
                 <!--제목,분류,작성일-->
                 <div class="card-header">
-                    <strong style="font-size: 25px;">{{ review.title }}</strong>
-                    &nbsp;&nbsp;<span style="font-size: 18px; color: gray;">{{ review.movie }}</span>
-                    <div>
-                      <span style="float:right;">최초 작성 시각 : {{ review.created_at|date:'Y.m.d. H:i' }}</span><br>
-                      <span style="float:right;">수정 시각 : {{ review.updated_at|date:'Y.m.d. H:i' }}</span>
-                    </div>
+                  <strong style="font-size: 25px;">{{ review.title }}</strong>
+                  &nbsp;&nbsp;<span style="font-size: 18px; color: gray;">{{ review.movie }}</span>
+                  <div>
+                    <span style="float:right;">최초 작성 시각 : {{ review.created_at|date:'Y.m.d. H:i' }}</span><br>
+                    <span style="float:right;">수정 시각 : {{ review.updated_at|date:'Y.m.d. H:i' }}</span>
+                  </div>
+                  <span style="font-size: 18px;">작성자 평점 : {{ review.rank }}</span>
                 </div>
                 <div class="card-body" style="min-height: 400px; color:black;">
                     <!--작성자, 조회수-->
@@ -39,12 +40,6 @@
                         </div>
                     </div>
                     <hr>
-                    {% if notice.upload_files %}
-                    <div class="col-12 text-right">
-                        <span style="color: gray;">첨부파일 :&nbsp;</span>
-                        <a id="id_uploaded_file" href="{% url 'notice:notice_download' notice.id %}" >{{ notice.filename|truncatechars:25 }}</a>
-                    </div>
-                    {% endif %}
                     <!--내용-->
                     <div>
                         {{ review.content | safe }}
