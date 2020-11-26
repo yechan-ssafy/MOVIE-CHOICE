@@ -21,10 +21,8 @@
                     <th style="font-weight: bold; font-size: 16px;">등록일</th>
                     <th style="font-weight: bold; font-size: 16px;">좋아요 수</th>
                 </tr>
-
             </thead>
             <tbody>
-
                 {% for review in users %}
                 <tr class="text-center" style="cursor:pointer;" onclick="location.href='{% url 'community:detail' review.pk %}'">
                     <td style="font-weight: 500;">{{ review.pk }}</td>
@@ -35,7 +33,6 @@
                     <td style="font-weight: 500;">{{ review.like_users.all|length }}</td>
                 </tr>
                 {% endfor %}
-                
             </tbody>
         </table>
         <!-- 검색 창 -->
@@ -58,7 +55,6 @@
                       style="width: 15em;" placeholder="검색어를 입력해주세요.">
               </div>
               <div class="col">
-                  <!-- <button class="btn btn-md btn-outline-dark" type="submit">검색</button> -->
                   <button class="btn btn-sm btn-primary mt-2" type="submit" id="search_btn">검색</button>
               </div>
             </div>
@@ -66,7 +62,7 @@
         </div>
       </form>
 
-      <!-- pagination -->
+  <!-- pagination -->
   {% if users.has_other_pages %}
     <ul class="pagination d-flex row justify-content-center">
       {% if users.has_previous %}

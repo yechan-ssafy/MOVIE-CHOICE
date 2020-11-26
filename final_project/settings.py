@@ -148,9 +148,3 @@ STATICFILES_DIRS = [
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
-
-
-# # Message Framework
-# from django.contrib.messages import constants as messages_constants
-
-# MESSAGE_LEVEL = messages_constants.DEBUG

@@ -334,3 +334,4 @@ def search_movie(request):
         'search_movie_list': search_movie_list,
     }
     return render(request, 'movies/search_movie_list.html', context)
+    
