@@ -4,10 +4,10 @@
   <h1 class="font01 text-center mt-5">#{{ genre.name }}</h1>
   <br>
   <div class="container">
-    <div class="row row-cols-1 row-cols-sm-3 row-cols-md-6">
+    <div class="row row-cols-1 row-cols-md-6">
       {% for movie in movie_list %}
         <div class="col mb-3">
-          <div class="card-content">
+          <div class="card-content row justify-content-center">
             <a class="spectrum-a" href="{% url 'movies:detail' movie.pk %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ movie.poster_path }}" alt="poster"></a>
           </div>
         </div>
