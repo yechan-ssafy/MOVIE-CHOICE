@@ -26,7 +26,7 @@
       <div class="row row-cols-1 row-cols-sm-3 row-cols-md-6">
         {% for weather_movie in weather_movies %}
           <div class="col mb-3">
-            <div class="card-content row justify-content-center">
+            <div class="card-content">
               <a class="spectrum-a" href="{% url 'movies:detail' weather_movie.id %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ weather_movie.poster_path }}" alt="{{ weather_movie.title }}"></a>
             </div>
           </div>
@@ -57,7 +57,7 @@
       <div class="row row-cols-1 row-cols-sm-3 row-cols-md-6">
         {% for like_movie in like_movies %}
           <div class="col mb-3">
-            <div class="card-content row justify-content-center">
+            <div class="card-content">
               <a class="spectrum-a" href="{% url 'movies:detail' like_movie.id %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ like_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
             </div>
           </div>
@@ -70,7 +70,7 @@
     <div class="row row-cols-1 row-cols-sm-3 row-cols-md-6">
         {% for like_movie_director_movie in like_movie_director_movie_list %}
           <div class="col mb-3">
-            <div class="card-content row justify-content-center">
+            <div class="card-content">
               <a class="spectrum-a" href="{% url 'movies:detail' like_movie_director_movie.id %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ like_movie_director_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
             </div>
           </div>
@@ -83,7 +83,7 @@
     <div class="row row-cols-1 row-cols-sm-3 row-cols-md-6">
       {% for like_movie_genre_movie in like_movie_genre_movie_list %}
         <div class="col mb-3">
-          <div class="card-content row justify-content-center">
+          <div class="card-content">
             <a class="spectrum-a" href="{% url 'movies:detail' like_movie_genre_movie.id %}"><img style="width: 150px; height: 190px; object-fit: cover;" class="img-fluid" src="{{ like_movie_genre_movie.poster_path }}" alt="{{ like_movie.title }}"></a>
           </div>
         </div>
@@ -180,12 +180,12 @@
   }
 
   div.card-content h3 {
-  margin-bottom: 0.5em;
-  font-weight: normal;
+    margin-bottom: 0.5em;
+    font-weight: normal;
   }
 
   div.card-content p {
-  font-size: 95%;
+    font-size: 95%;
   }
 
   img.spectrum1 {
