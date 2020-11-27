@@ -25,7 +25,7 @@
           <div class="badge badge-primary badge-sm">COMMENT</div>
           <div class="card-title"><h5 class="font03"><b>{{ person.username }}가 쓴 댓글</b></h5></div>
           {% for comment in person.comment_set.all %}
-            <p class="card-text text-left">{{ comment.content }}</p>
+            <a href="{% url 'community:detail' comment.review_id %}"><p class="card-text text-left">{{ comment.content }}</p></a>
             <hr>
           {% endfor %}
         </div>
