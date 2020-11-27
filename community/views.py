@@ -20,6 +20,7 @@ def index(request):
     search_type = request.GET.get('type', '')
     notice_list = Review.objects.order_by('-id') 
     
+    search_notice_list = []
     if search_keyword :
         if len(search_keyword) >= 2 :
             if search_type == 'all':
