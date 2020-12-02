@@ -4,4 +4,6 @@ from .base import *
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'movie-choice-app.herokuapp.com',
+]
