@@ -146,7 +146,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'final_project' / 'static',
+    BASE_DIR / 'staticfiles',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
